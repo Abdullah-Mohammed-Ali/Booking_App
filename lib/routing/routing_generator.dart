@@ -6,7 +6,7 @@ class AppRoute {
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutingNames.splash:
-        return _fadeInRoute(page: SplashScreen);
+        return _fadeInRoute(page: SplashScreen());
     }
   }
 
