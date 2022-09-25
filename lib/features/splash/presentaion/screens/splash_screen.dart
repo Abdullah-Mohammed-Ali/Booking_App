@@ -2,6 +2,8 @@ import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../components/default_item.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -61,38 +63,5 @@ class SplashScreen extends StatelessWidget {
         ),
       ],
     ));
-  }
-}
-
-class DefaultElevatedButton extends StatelessWidget {
-  DefaultElevatedButton({
-    Key? key,
-    required this.title,
-    required this.onPressed,
-    required this.backgroundColor,
-    this.height = 50,
-  }) : super(key: key);
-  final String title;
-  final VoidCallback onPressed;
-  final Color backgroundColor;
-  double? height;
-  @override
-  Widget build(BuildContext context) {
-    print(height);
-    return Container(
-      height: height ?? 50.h,
-      width: double.maxFinite,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadiusDirectional.circular(25.h),
-      ),
-      child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(backgroundColor)),
-        clipBehavior: Clip.antiAlias,
-        onPressed: onPressed,
-        child: Text(title),
-      ),
-    );
   }
 }
