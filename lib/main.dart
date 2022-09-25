@@ -1,6 +1,7 @@
 import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:booking_app/routing/routing_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'dependency_container.dart' as di;
 
@@ -16,11 +17,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Booking App',
-      onGenerateRoute: AppRoute.onGenerateRoute,
-      initialRoute: AppRoutingNames.splash,
+    return ScreenUtilInit(
+      designSize: const Size(360, 750),
+      minTextAdapt: true,
+      builder: (BuildContext context, Widget? child) {
+        return const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Booking App',
+          onGenerateRoute: AppRoute.onGenerateRoute,
+          initialRoute: AppRoutingNames.splash,
+        );
+      },
     );
   }
 }
