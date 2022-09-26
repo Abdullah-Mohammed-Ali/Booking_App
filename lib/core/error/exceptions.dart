@@ -12,3 +12,17 @@ class LocalDatabaseException implements Exception{
 
   const LocalDatabaseException({required this.message});
 }
+
+// Tolba's Errors
+
+class PrimaryServerException implements Exception {
+  final String error;
+  final String message;
+  final int code;
+
+  PrimaryServerException({
+    required this.error,
+    required this.message,
+    required this.code,
+  });
+}
