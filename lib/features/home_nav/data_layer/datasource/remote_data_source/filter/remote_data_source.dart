@@ -41,7 +41,6 @@ class FilterRemoteDataSource extends BaseFilterRemoteDataSource {
     });
 
     if (response.statusCode == 200) {
-      print(response.data);
       return SearchHotelsModel.fromJson(response.data);
     } else {
       throw ServerException(

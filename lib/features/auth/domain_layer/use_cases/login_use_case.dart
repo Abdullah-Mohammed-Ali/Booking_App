@@ -23,6 +23,5 @@ class LoginParameter extends Equatable {
   const LoginParameter(this._authUser);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [_authUser];
 }

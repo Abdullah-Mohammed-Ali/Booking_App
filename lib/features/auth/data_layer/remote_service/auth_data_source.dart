@@ -26,7 +26,6 @@ class AuthDataSource extends AuthContractDataSource {
     });
 
     if (response.statusCode == 200) {
-      print(response.data);
       if (response.data['status']['type'] == 0) {
         throw AuthException(response.data['status']['title']['en']);
       } else {
@@ -48,7 +47,6 @@ class AuthDataSource extends AuthContractDataSource {
     });
 
     if (response.statusCode == 200) {
-      print(response.data);
       if (response.data['status']['type'] == 0) {
         throw AuthException(response.data['status']['title']['en']);
       } else {
