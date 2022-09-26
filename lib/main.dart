@@ -27,11 +27,13 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 750),
       minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
-        return const MaterialApp(
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Booking App',
           onGenerateRoute: AppRoute.onGenerateRoute,
-          initialRoute: AppRoutingNames.splash,
+          initialRoute: GlobalApiToken == ''
+              ? AppRoutingNames.splash
+              : AppRoutingNames.homeScreen,
         );
       },
     );

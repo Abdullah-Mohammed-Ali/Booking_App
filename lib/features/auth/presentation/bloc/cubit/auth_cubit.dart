@@ -5,6 +5,7 @@ import 'package:booking_app/features/auth/domain_layer/use_cases/login_use_case.
 import 'package:booking_app/features/auth/domain_layer/use_cases/register_use_case.dart';
 import 'package:booking_app/features/auth/domain_layer/use_cases/shared_pref_use_cases/shared_pref_get_use_case.dart';
 import 'package:booking_app/features/auth/presentation/const_strings.dart';
+import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,6 +69,8 @@ class AuthCubit extends Cubit<AuthState> {
     }, (r) async {
       await _shaerdPrefPostUseCase.call(
           value: r.apiToken, key: sharedApiTokenKey);
+      Navigator.pushReplacementNamed(context, AppRoutingNames.homeScreen);
+
       emit(AuthSignInSuccess());
     });
   }
@@ -85,6 +88,7 @@ class AuthCubit extends Cubit<AuthState> {
       print('Api token : ' + r.apiToken!);
       await _shaerdPrefPostUseCase.call(
           value: r.apiToken, key: sharedApiTokenKey);
+      Navigator.pushReplacementNamed(context, AppRoutingNames.homeScreen);
 
       emit(AuthSignInSuccess());
     });

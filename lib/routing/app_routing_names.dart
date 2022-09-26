@@ -4,4 +4,5 @@ class AppRoutingNames {
   static const String signIn = "sign in screen";
   static const String signUp = "Sign up screen";
   static const String forgetPass = "forget password screen";
+  static const String homeScreen = "Home screen";
 }
