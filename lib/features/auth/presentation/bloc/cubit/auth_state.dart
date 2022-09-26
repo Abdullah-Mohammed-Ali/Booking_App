@@ -14,3 +14,5 @@ class AuthProfileImageLoading extends AuthState {}
 class AuthProfileImageSuccess extends AuthState {}
 
 class AuthProfileImageError extends AuthState {}
+
+class ShowPasswordState extends AuthState {}

@@ -41,35 +41,50 @@ class DefaultTextFormField extends StatelessWidget {
           height: 4.h,
         ),
         Container(
-          height: height ?? 40.h,
-          child: Material(
-            borderRadius: BorderRadius.circular(25.h),
-            elevation: 1,
-            shadowColor: Colors.grey,
-            child: TextFormField(
-                validator: validator,
-                textInputAction: keyboardAction,
-                keyboardType: keyboardType,
-                obscureText: isPassword ?? false,
-                controller: TextEditingController(),
-                decoration: InputDecoration(
-                  suffixIcon: suffix,
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  hintText: hintText ?? '',
-                  isDense: true,
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.h),
-                    borderSide: const BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.h),
-                    borderSide: const BorderSide(color: Colors.white),
-                  ),
-                )),
-          ),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.h),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12.withOpacity(0.1),
+                    blurRadius: 10.h,
+                    offset: Offset(1.w, 3.h),
+                    spreadRadius: 0)
+              ]),
+          child: TextFormField(
+              validator: validator,
+              textInputAction: keyboardAction,
+              keyboardType: keyboardType,
+              obscureText: isPassword ?? false,
+              controller: TextEditingController(),
+              decoration: InputDecoration(
+                suffixIcon: suffix,
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                hintText: hintText ?? '',
+                isDense: true,
+                filled: true,
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.h),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.h),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.h),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.h),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.h),
+                  borderSide: const BorderSide(color: Colors.white),
+                ),
+              )),
         ),
       ],
     );

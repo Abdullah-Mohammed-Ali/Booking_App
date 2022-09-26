@@ -15,4 +15,5 @@ class QueryParametersHeaders {
   static const String authPass = 'password';
   static const String authPassConfirmation = 'password_confirmation';
   static const String authEmail = 'email';
+  static const String image = 'image';
 }

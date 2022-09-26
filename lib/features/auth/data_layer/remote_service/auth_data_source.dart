@@ -44,6 +44,9 @@ class AuthDataSource extends AuthContractDataSource {
       QueryParametersHeaders.authEmail: authUser.email,
       QueryParametersHeaders.authPass: authUser.password,
       QueryParametersHeaders.authPassConfirmation: authUser.password,
+      QueryParametersHeaders.image: MultipartFile.fromFile(
+          authUser.imagePath!.path,
+          filename: authUser.imagePath!.path.split('/').last),
     });
 
     if (response.statusCode == 200) {
