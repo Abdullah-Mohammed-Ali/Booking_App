@@ -13,9 +13,9 @@ class AppRoute {
       case AppRoutingNames.onBoarding:
         return _fadeInRoute(page: const OnBoardingScreen());
       case AppRoutingNames.signIn:
-        return _fadeInRoute(page: const SignInScreen());
+        return _fadeInRoute(page: SignInScreen());
       case AppRoutingNames.signUp:
-        return _fadeInRoute(page: const SignUpScreen());
+        return _fadeInRoute(page: SignUpScreen());
     }
   }
 

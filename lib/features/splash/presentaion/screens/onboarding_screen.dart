@@ -1,4 +1,5 @@
 import 'package:booking_app/features/splash/presentaion/components/on_boarding_item.dart';
+import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,7 +66,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               height: 42.h,
               elevation: 0,
               title: 'Login',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutingNames.signIn);
+              },
               backgroundColor: Colors.blue),
         ),
         SizedBox(
@@ -77,7 +80,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               height: 42.h,
               elevation: 1,
               title: 'Create account',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutingNames.signUp);
+              },
               textColor: Colors.black,
               backgroundColor: Colors.white),
         ),
