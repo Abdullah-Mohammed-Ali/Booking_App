@@ -24,15 +24,18 @@ class AuthDataSource extends AuthContractDataSource {
       QueryParametersHeaders.authPass: authUser.password,
       QueryParametersHeaders.authPassConfirmation: authUser.password,
     });
-
+    print(response.data);
     if (response.statusCode == 200) {
-      if (response.data['status']['type'] == 0) {
+      if (response.data['status']['type'] == '0') {
+        print(2);
         throw AuthException(response.data['status']['title']['en']);
       } else {
+        print(3);
         return AuthUserModel.fromJson(response.data['data']);
       }
     } else {
-      throw ServerException(errorMessageModel: response.data);
+      print(4);
+      throw AuthException(response.data['status']['title']['en']);
     }
   }
 
@@ -50,14 +53,13 @@ class AuthDataSource extends AuthContractDataSource {
     });
 
     if (response.statusCode == 200) {
-      if (response.data['status']['type'] == 0) {
+      if (response.data['status']['type'] == '0') {
         throw AuthException(response.data['status']['title']['en']);
       } else {
         return AuthUserModel.fromJson(response.data['data']);
       }
     } else {
-      throw ServerException(
-          errorMessageModel: ErrorMessageModel.fromJson(response.data));
+      throw AuthException(response.data['status']['title']['en']);
     }
   }
 }

@@ -2,11 +2,12 @@ import 'package:booking_app/features/auth/presentation/const_strings.dart';
 
 String? emailValidator(String value) {
   if (!checkEmptyField(value)) {
-    if (!value.contains('@') && !value.contains('.com')) {
+    if (!value.contains('@') || !value.contains('.com')) {
       return emailValidation;
     }
+  } else {
+    return 'Email$emptyValidation';
   }
-  return 'Email$emptyValidation';
 }
 
 String? usernameValidation(String value) {
@@ -20,8 +21,9 @@ String? passwordValidator(String value) {
     if (value.length < 6) {
       return passwordValidation;
     }
+  } else {
+    return 'Password$emptyValidation';
   }
-  return 'Password$emptyValidation';
 }
 
 String? passwordConfirmationValidator(String value, String password) {
@@ -29,8 +31,9 @@ String? passwordConfirmationValidator(String value, String password) {
     if (value != password) {
       return passwordConfirmationValidation;
     }
+  } else {
+    return 'Password confirmation$emptyValidation';
   }
-  return 'Password confirmation$emptyValidation';
 }
 
 bool checkEmptyField(String value) {

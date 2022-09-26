@@ -117,8 +117,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     : Icons.visibility_off,
                                 color: Colors.grey),
                             onPressed: () {
-                              cubit.isPasswordNotObscure =
-                                  !cubit.isPasswordNotObscure;
+                              setState(() {
+                                cubit.isPasswordNotObscure = cubit
+                                    .showPassword(cubit.isPasswordNotObscure);
+                              });
                             },
                             splashColor: Colors.transparent,
                           ),
@@ -145,11 +147,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     : Icons.visibility_off,
                                 color: Colors.grey),
                             onPressed: () {
-                              cubit.showPassword(
-                                  cubit.isPasswordConfirmationNotObscure);
-                              print('isPasswordConfirmationNotObscure' +
-                                  cubit.isPasswordConfirmationNotObscure
-                                      .toString());
+                              setState(() {
+                                cubit.isPasswordConfirmationNotObscure =
+                                    cubit.showPassword(
+                                        cubit.isPasswordConfirmationNotObscure);
+                              });
                             },
                             splashColor: Colors.transparent,
                           ),
@@ -157,14 +159,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 34.h,
                         ),
-                        DefaultElevatedButton(
-                          height: 50.h,
-                          backgroundColor: Colors.blue,
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {}
-                          },
-                          title: 'Sign Up',
-                        ),
+                        (state is AuthSignupLoading)
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : DefaultElevatedButton(
+                                height: 50.h,
+                                backgroundColor: Colors.blue,
+                                onPressed: () async {
+                                  if (formKey.currentState!.validate()) {
+                                    if (cubit.profileImage == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                        content: Text(
+                                          'you need to upload a profile picture',
+                                        ),
+                                      ));
+                                    }
+                                    await cubit.register(context);
+                                  }
+                                },
+                                title: 'Sign Up',
+                              ),
                         SizedBox(
                           height: 14.h,
                         ),

@@ -1,13 +1,11 @@
+import 'package:booking_app/core/error/exceptions.dart';
 import 'package:booking_app/core/error/failure.dart';
 import 'package:booking_app/features/auth/data_layer/remote_service/auth_data_source.dart';
-import 'package:booking_app/features/auth/domain_layer/entity/auth_user.dart';
 import 'package:booking_app/features/auth/domain_layer/entity/user.dart';
 import 'package:booking_app/features/auth/domain_layer/repo/auth_contract_repo.dart';
 import 'package:booking_app/features/auth/domain_layer/use_cases/login_use_case.dart';
 import 'package:booking_app/features/auth/domain_layer/use_cases/register_use_case.dart';
 import 'package:dartz/dartz.dart';
-
-import '../../../booking/domain_layer/entities/user_entity.dart';
 
 class AuthRepoImplementation extends AuthContractRepo {
   final AuthDataSource _dataSource;
@@ -21,8 +19,9 @@ class AuthRepoImplementation extends AuthContractRepo {
       return await _dataSource
           .register(parameters.authUser)
           .then((value) => Right(value));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
+    } on AuthException catch (e) {
+      print(e);
+      return Left(ServerFailure(e.errorMessage));
     }
   }
 
@@ -33,8 +32,9 @@ class AuthRepoImplementation extends AuthContractRepo {
       return await _dataSource
           .login(parameters.authUser)
           .then((value) => Right(value));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
+    } on AuthException catch (e) {
+      print(e);
+      return Left(ServerFailure(e.errorMessage));
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:booking_app/features/auth/presentation/screens/forget_pass_screen.dart';
 import 'package:booking_app/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:booking_app/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:booking_app/features/splash/presentaion/screens/onboarding_screen.dart';
@@ -16,6 +17,8 @@ class AppRoute {
         return _fadeInRoute(page: SignInScreen());
       case AppRoutingNames.signUp:
         return _fadeInRoute(page: SignUpScreen());
+      case AppRoutingNames.forgetPass:
+        return _fadeInRoute(page: ForgetPassScreen());
     }
   }
 

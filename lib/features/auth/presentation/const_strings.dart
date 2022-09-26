@@ -8,3 +8,5 @@ const emailValidation = 'please enter working email';
 const passwordValidation = 'password must be at least 6 letters';
 const passwordConfirmationValidation =
     'password confirmation must be identical to the password';
+
+const String sharedApiTokenKey = 'ApiToken';

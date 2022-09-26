@@ -55,7 +55,7 @@ class DefaultTextFormField extends StatelessWidget {
               textInputAction: keyboardAction,
               keyboardType: keyboardType,
               obscureText: isPassword ?? false,
-              controller: TextEditingController(),
+              controller: controller,
               decoration: InputDecoration(
                 suffixIcon: suffix,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
