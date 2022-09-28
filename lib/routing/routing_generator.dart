@@ -1,3 +1,4 @@
+import 'package:booking_app/features/explore/presentation/screens/explore_screen.dart';
 import 'package:booking_app/features/splash/presentaion/splash_screen.dart';
 import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ class AppRoute {
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutingNames.splash:
-        return _fadeInRoute(page: SplashScreen);
+        return _fadeInRoute(page: ExploreScreen());
     }
   }
 
