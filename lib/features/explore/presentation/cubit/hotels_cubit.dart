@@ -25,6 +25,7 @@ class HotelsCubit extends Cubit<HotelsState> {
       emit(ErrorState(exception: l));
     }, (r) {
       hotels = r.data!.data;
+
       emit(HotelsSuccessState());
     });
   }

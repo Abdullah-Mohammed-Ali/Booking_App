@@ -1,10 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
-
 import 'images_model.dart';
 
 class HotelModel {
-  final String id;
+  final int id;
   final String name;
   final String description;
   final String price;
@@ -31,17 +30,18 @@ class HotelModel {
   });
 
   factory HotelModel.fromJson(Map<String, dynamic> json) {
+    print(json['hotel_images']);
     return HotelModel(
       id: json['id'],
-      name: json['id'],
-      description: json['id'],
-      price: json['id'],
-      address: json['id'],
-      longitude: json['id'],
-      latitude: json['id'],
-      rate: json['id'],
-      created_at: json['id'],
-      updated_at: json['id'],
+      name: json['name'],
+      description: json['description'],
+      price: json['price'],
+      address: json['address'],
+      longitude: json['longitude'],
+      latitude: json['latitude'],
+      rate: json['rate'],
+      created_at: json['created_at'],
+      updated_at: json['updated_at'],
       hotelsImages: HotelsDataImagesModel.fromjson(json['hotel_images']),
     );
   }
@@ -54,13 +54,11 @@ class HotelsDataImagesModel {
     required this.hotelImages,
   });
 
-  factory HotelsDataImagesModel.fromjson(Map<String, dynamic> json) {
+  factory HotelsDataImagesModel.fromjson(List<dynamic> json) {
     return HotelsDataImagesModel(
-      hotelImages: List<HotelsImagesModel>.from(
-        json['hotel_images'].map(
-          (x) => HotelsImagesModel.fromJson(x),
-        ),
-      ),
+      hotelImages: json.map((e) {
+        return HotelsImagesModel.fromJson(e);
+      }).toList(),
     );
   }
 }
