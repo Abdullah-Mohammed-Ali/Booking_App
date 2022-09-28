@@ -9,20 +9,21 @@ import '../../../../core/usecase/base_use_case.dart';
 import '../../../booking/domain_layer/entities/user_entity.dart';
 import '../entity/auth_user.dart';
 
-class LoginUseCase extends BaseUseCase<AuthUserEntity, LoginParameter> {
+class RegisterUseCase extends BaseUseCase<AuthUserEntity, RegisterParameter> {
   final AuthContractRepo _authContractRepo;
 
-  LoginUseCase(this._authContractRepo);
+  RegisterUseCase(this._authContractRepo);
+
   @override
   Future<Either<Failure, AuthUserEntity>> call(parameters) async {
-    return await _authContractRepo.login(parameters);
+    return await _authContractRepo.register(parameters);
   }
 }
 
-class LoginParameter extends Equatable {
+class RegisterParameter extends Equatable {
   final AuthUser authUser;
 
-  const LoginParameter(this.authUser);
+  const RegisterParameter(this.authUser);
 
   @override
   List<Object?> get props => [authUser];

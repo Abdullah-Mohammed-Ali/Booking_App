@@ -2,7 +2,6 @@ import 'package:booking_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
 class HotelHightlightsWidget extends StatelessWidget {
   final String hotelName;
   final String address;
@@ -10,9 +9,9 @@ class HotelHightlightsWidget extends StatelessWidget {
 
   const HotelHightlightsWidget(
       {Key? key,
-        required this.hotelName,
-        required this.price,
-        required this.address})
+      required this.hotelName,
+      required this.price,
+      required this.address})
       : super(key: key);
 
   @override
@@ -76,7 +75,7 @@ class HotelHightlightsWidget extends StatelessWidget {
                           allowHalfRating: true,
                           itemCount: 5,
                           itemPadding:
-                          const EdgeInsets.symmetric(horizontal: 1.0),
+                              const EdgeInsets.symmetric(horizontal: 1.0),
                           itemBuilder: (context, _) => Icon(
                             Icons.star,
                             color: AppColors.myGreen,
@@ -91,7 +90,7 @@ class HotelHightlightsWidget extends StatelessWidget {
                         Text(
                           '80 reviews',
                           style:
-                          TextStyle(color: AppColors.white, fontSize: 17),
+                              TextStyle(color: AppColors.white, fontSize: 17),
                         ),
                       ],
                     )
