@@ -22,7 +22,7 @@ class AppRoute {
       case AppRoutingNames.forgetPass:
         return _fadeInRoute(page: const ForgetPassScreen());
       case AppRoutingNames.homeScreen:
-        return _fadeInRoute(page: ExploreScreen());
+        return _fadeInRoute(page: const ExploreScreen());
     }
   }
 
