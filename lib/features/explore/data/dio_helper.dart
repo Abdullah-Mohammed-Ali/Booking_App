@@ -33,8 +33,8 @@ class DioImplment extends DioHotel {
       dio.options.connectTimeout = timeout;
     }
 
-    debugPrint('URL => ${dio.options.baseUrl + hotelsendPoint}');
-    debugPrint('Body => $data');
+    // debugPrint('URL => ${dio.options.baseUrl + hotelsendPoint}');
+    // debugPrint('Body => $data');
 
     return await request(
       call: () async => await dio.get(
@@ -49,8 +49,8 @@ extension on DioHotel {
   Future request({required Future<Response> Function() call}) async {
     try {
       final r = await call.call();
-      debugPrint('Response => ${r.data}');
-      debugPrint('Response => ${r.statusCode}');
+      // debugPrint('Response => ${r.data}');
+      // debugPrint('Response => ${r.statusCode}');
       return r;
     } on DioError catch (e) {
       debugPrint('Error _Message => ${e.message}');

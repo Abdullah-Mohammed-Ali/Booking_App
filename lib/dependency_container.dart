@@ -6,6 +6,9 @@ import 'package:booking_app/features/auth/domain_layer/repo/auth_contract_repo.d
 import 'package:booking_app/features/auth/domain_layer/use_cases/login_use_case.dart';
 import 'package:booking_app/features/auth/domain_layer/use_cases/register_use_case.dart';
 import 'package:booking_app/features/auth/presentation/bloc/cubit/auth_cubit.dart';
+import 'package:booking_app/features/explore/data/dio_helper.dart';
+import 'package:booking_app/features/explore/data/repository.dart';
+import 'package:booking_app/features/explore/presentation/cubit/hotels_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +28,7 @@ Future<void> init() async {
   // blocs
   sl.registerFactory(() => AuthCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => FathiBloc(sl(), sl()));
+  sl.registerFactory(() => HotelsCubit(repository: sl()));
 
   //USE CASES
   sl.registerLazySingleton(() => GetFacilitiesUseCase(sl()));
@@ -38,6 +42,11 @@ Future<void> init() async {
   sl.registerLazySingleton<BaseFilterRepository>(() => FilterRepository(sl()));
   sl.registerLazySingleton<AuthContractRepo>(
       () => AuthRepoImplementation(sl()));
+
+  sl.registerLazySingleton<Repository>(
+      () => RepositoryImplementation(dioHotel: sl()));
+
+  sl.registerLazySingleton<DioHotel>(() => DioImplment());
 
 // Dio
   Dio _dio = Dio();

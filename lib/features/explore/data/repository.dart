@@ -23,13 +23,14 @@ class RepositoryImplementation extends Repository {
     return basicErrorHanding<HotelsModel>(
       onSuccess: () async {
         final response = await dioHotel.get(
-            endpoint: hotelsendPoint,
-            query: {
-              'page': page,
-              'count': 10,
-            },
-            );
-        return HotelsModel.fromJson(response);
+          endpoint: hotelsendPoint,
+          query: {
+            'page': page,
+            'count': 10,
+          },
+        );
+        // print(response);
+        return HotelsModel.fromJson(response.data);
       },
       onPrimaryServer: (e) async {
         return e;

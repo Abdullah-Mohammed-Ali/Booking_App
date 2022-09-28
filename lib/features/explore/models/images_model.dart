@@ -1,5 +1,5 @@
 class HotelsImagesModel {
-  final String id;
+  final int id;
   final String hotelId;
   final String image;
 

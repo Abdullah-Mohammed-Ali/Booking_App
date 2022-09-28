@@ -1,3 +1,5 @@
+import 'package:booking_app/features/booking/presentation/screens/hotels_maps_screen.dart';
+import 'package:booking_app/features/home_nav/presentation/screens/home_nav.dart';
 import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +25,10 @@ class AppRoute {
         return _fadeInRoute(page: const ForgetPassScreen());
       case AppRoutingNames.homeScreen:
         return _fadeInRoute(page: const ExploreScreen());
+      case AppRoutingNames.homeNavScreen:
+        return _fadeInRoute(page: const HomeNavScreen());
+      case AppRoutingNames.mapsScreen:
+        return _fadeInRoute(page: const HotelsMapScreen());
     }
   }
 
