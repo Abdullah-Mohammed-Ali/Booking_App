@@ -10,7 +10,6 @@ import 'package:booking_app/features/home_nav/presentation/components/hotel_deta
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 
-
 class HotelDetailsScreen extends StatelessWidget {
   HotelDetailsScreen({Key? key}) : super(key: key);
 
@@ -82,7 +81,7 @@ class HotelDetailsScreen extends StatelessWidget {
             //   )
             // ],
             flexibleSpace:
-            Stack(alignment: AlignmentDirectional.bottomCenter, children: [
+                Stack(alignment: AlignmentDirectional.bottomCenter, children: [
               Image.network(
                 'https://marketplace.canva.com/Ic2KM/MAE3X1Ic2KM/1/s2/canva-woman-at-outdoor-iftar-picnic-MAE3X1Ic2KM.jpg',
                 width: double.maxFinite,
@@ -229,19 +228,19 @@ class HotelDetailsScreen extends StatelessWidget {
                   const ReviewWidget(
                     reviewerName: 'Alexia Jane',
                     imageUrl:
-                    'https://marketplace.canva.com/ixlvc/MAEGxWixlvc/1/s2/canva-teacher-asking-a-question-to-the-class-MAEGxWixlvc.jpg',
+                        'https://marketplace.canva.com/ixlvc/MAEGxWixlvc/1/s2/canva-teacher-asking-a-question-to-the-class-MAEGxWixlvc.jpg',
                     rate: 8.0,
                     review:
-                    'This is located in a great spot close to shops and bars, very quiet location.',
+                        'This is located in a great spot close to shops and bars, very quiet location.',
                   ),
                   const MySpacer(),
                   const ReviewWidget(
                     reviewerName: 'Jacky Depp',
                     imageUrl:
-                    'https://marketplace.canva.com/ixlvc/MAEGxWixlvc/1/s2/canva-teacher-asking-a-question-to-the-class-MAEGxWixlvc.jpg',
+                        'https://marketplace.canva.com/ixlvc/MAEGxWixlvc/1/s2/canva-teacher-asking-a-question-to-the-class-MAEGxWixlvc.jpg',
                     rate: 8.0,
                     review:
-                    'Good staff, very comfortable bed. Very quiet location, place could be with an update',
+                        'Good staff, very comfortable bed. Very quiet location, place could be with an update',
                   ),
                   const MySpacer(),
                   Image.network(
