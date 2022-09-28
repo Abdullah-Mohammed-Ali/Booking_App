@@ -1,5 +1,7 @@
 import 'package:booking_app/core/error/failure.dart';
 import 'package:booking_app/features/auth/data_layer/repo_implementaion/auth_repo_implementation.dart';
+import 'package:booking_app/features/auth/domain_layer/entity/user.dart';
+import 'package:booking_app/features/auth/domain_layer/repo/auth_contract_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
@@ -7,22 +9,21 @@ import '../../../../core/usecase/base_use_case.dart';
 import '../../../booking/domain_layer/entities/user_entity.dart';
 import '../entity/auth_user.dart';
 
-class LoginUseCase extends BaseUseCase<UserEntity, LoginParameter> {
-  final AuthRepoImplementation _authContractRepo;
+class LoginUseCase extends BaseUseCase<AuthUserEntity, LoginParameter> {
+  final AuthContractRepo _authContractRepo;
 
   LoginUseCase(this._authContractRepo);
   @override
-  Future<Either<Failure, UserEntity>> call(parameters) async {
-    return await _authContractRepo.login();
+  Future<Either<Failure, AuthUserEntity>> call(parameters) async {
+    return await _authContractRepo.login(parameters);
   }
 }
 
 class LoginParameter extends Equatable {
-  final AuthUser _authUser;
+  final AuthUser authUser;
 
-  const LoginParameter(this._authUser);
+  const LoginParameter(this.authUser);
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [_authUser];
+  List<Object?> get props => [authUser];
 }

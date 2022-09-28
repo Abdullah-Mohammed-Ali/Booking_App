@@ -1,19 +1,22 @@
-
 import 'package:booking_app/core/network/error_message_model.dart';
 
-class ServerException implements Exception{
+class ServerException implements Exception {
   final ErrorMessageModel errorMessageModel;
 
   const ServerException({required this.errorMessageModel});
 }
 
-class LocalDatabaseException implements Exception{
+class LocalDatabaseException implements Exception {
   final String message;
 
   const LocalDatabaseException({required this.message});
 }
 
-// Tolba's Errors
+class AuthException implements Exception {
+  final String errorMessage;
+
+  AuthException(this.errorMessage);
+}
 
 class PrimaryServerException implements Exception {
   final String error;
