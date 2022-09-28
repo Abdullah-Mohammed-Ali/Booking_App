@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/error/exceptions.dart';
 
-
 abstract class DioHotel {
   Future<dynamic> get({
     String? endpoint,

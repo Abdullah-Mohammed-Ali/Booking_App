@@ -61,44 +61,40 @@ class _HomeWidgetState extends State<HomeWidget> {
                 floating: true,
               ),
             ]),
-        body: Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return Stack(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(40.0, 5.0, 20.0, 5.0),
-                    height: 170.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.darkGrey,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+        body: ListView.builder(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) {
+            return Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.fromLTRB(40.0, 5.0, 20.0, 5.0),
+                  height: 170.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.darkGrey,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                width: 120.0,
-                                child: Text(
-                                  'Hilton',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
+                              const Text(
+                                'Hilton',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
                               Column(
                                 children: const <Widget>[
@@ -123,38 +119,38 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ),
                             ],
                           ),
-                          const Text(
-                            " Nasr city, Egypt",
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
+                        ),
+                        const Text(
+                          " Nasr city, Egypt",
+                          style: TextStyle(
+                            color: Colors.grey,
                           ),
-                          _buildRatingStars(4),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                        ],
-                      ),
+                        ),
+                        _buildRatingStars(4),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                      ],
                     ),
                   ),
-                  Positioned(
-                    left: 10.0,
-                    top: 15.0,
-                    bottom: 15.0,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(23.0),
-                      child: const Image(
-                        width: 120.0,
-                        image: NetworkImage(
-                            'https://img.freepik.com/free-photo/popular-resort-amara-dolce-vita-luxury-hotel-with-pools-water-parks-recreational-area-along-sea-coast-turkey-sunset-tekirova-kemer_146671-18759.jpg?w=1480&t=st=1664018398~exp=1664018998~hmac=4ef724cb30a02415c5eb6da81322e1055bc5a8bf61edba7e1da6ff4ece2063d6'),
-                        fit: BoxFit.cover,
-                      ),
+                ),
+                Positioned(
+                  left: 10.0,
+                  top: 15.0,
+                  bottom: 15.0,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(23.0),
+                    child: const Image(
+                      width: 120.0,
+                      image: NetworkImage(
+                          'https://img.freepik.com/free-photo/popular-resort-amara-dolce-vita-luxury-hotel-with-pools-water-parks-recreational-area-along-sea-coast-turkey-sunset-tekirova-kemer_146671-18759.jpg?w=1480&t=st=1664018398~exp=1664018998~hmac=4ef724cb30a02415c5eb6da81322e1055bc5a8bf61edba7e1da6ff4ece2063d6'),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

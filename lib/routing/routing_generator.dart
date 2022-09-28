@@ -1,12 +1,12 @@
-import 'package:booking_app/features/auth/presentation/screens/forget_pass_screen.dart';
-import 'package:booking_app/features/auth/presentation/screens/sign_in_screen.dart';
-import 'package:booking_app/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:booking_app/features/splash/presentaion/screens/onboarding_screen.dart';
-import 'package:booking_app/features/splash/presentaion/screens/splash_screen.dart';
 import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:flutter/material.dart';
 
-import '../features/home_nav/presentation/screens/explore_screen.dart';
+import '../features/auth/presentation/screens/forget_pass_screen.dart';
+import '../features/auth/presentation/screens/sign_in_screen.dart';
+import '../features/auth/presentation/screens/sign_up_screen.dart';
+import '../features/explore/presentation/screens/explore_screen.dart';
+import '../features/splash/presentaion/screens/onboarding_screen.dart';
+import '../features/splash/presentaion/screens/splash_screen.dart';
 
 class AppRoute {
   static Route? onGenerateRoute(RouteSettings settings) {
