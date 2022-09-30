@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../features/auth/presentation/screens/forget_pass_screen.dart';
 import '../features/auth/presentation/screens/sign_in_screen.dart';
 import '../features/auth/presentation/screens/sign_up_screen.dart';
-import '../features/explore/presentation/widget/explore_widget.dart';
+import '../features/explore/persentation/pages/hotels_maps_screen.dart';
 import '../features/home_nav/presentation/screens/filter_screen.dart';
 import '../features/home_nav/presentation/screens/home_nav.dart';
 import '../features/home_nav/presentation/screens/search_screen.dart';
@@ -24,12 +24,10 @@ class AppRoute {
         return _fadeInRoute(page: const SignUpScreen());
       case AppRoutingNames.forgetPass:
         return _fadeInRoute(page: const ForgetPassScreen());
-      case AppRoutingNames.homeScreen:
-        return _fadeInRoute(page: const HomeWidget());
       case AppRoutingNames.homeNavScreen:
         return _fadeInRoute(page: const HomeView());
       case AppRoutingNames.mapsScreen:
-        return _fadeInRoute(page: const HotelsMapScreen());
+        return _fadeInRoute(page: HotelsMapsScreen());
       case AppRoutingNames.filterScreen:
         return _fadeInRoute(page: const FilterScreen());
       case AppRoutingNames.searchScreen:
