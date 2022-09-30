@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:booking_app/core/Network/network_info.dart';
 import 'package:booking_app/core/error/failure.dart';
+import 'package:booking_app/core/network/network_info.dart';
 import 'package:booking_app/features/profile/data/models/pass_change_model.dart';
 import 'package:booking_app/features/profile/data/models/profile_info.dart';
 import 'package:booking_app/features/profile/data/models/update_info.dart';
@@ -12,49 +12,36 @@ import 'package:booking_app/features/profile/domain/reposatories/profiles_info_r
 
 import 'package:dartz/dartz.dart';
 
-
 class ProfileRepository implements ProfileRepositoryDomain {
-final ProfileWebService profileWebService;
-final NetworkInfo networkInfo;
+  final ProfileWebService profileWebService;
+  final NetworkInfo networkInfo;
 
-
-ProfileRepository({required this.profileWebService , required this.networkInfo});
+  ProfileRepository(
+      {required this.profileWebService, required this.networkInfo});
 
   @override
-  Future<Either<Failure,Profile_InfoModel>> ProfileInfo() async {
-
+  Future<Either<Failure, Profile_InfoModel>> ProfileInfo() async {
     final info = await profileWebService.getProfileInfo();
-    return Right(Profile_InfoModel.fromJson(info)) ;
+    return Right(Profile_InfoModel.fromJson(info));
+  }
 
-}
+  @override
+  Future<Either<Failure, PassChangeModel>> passChange(Pass pass) async {
+    final ProfileWebService profileWebService = ProfileWebService();
 
+    final info = await profileWebService.passChangeInfo(pass);
+    return Right(PassChangeModel.fromJson(info));
+  }
 
-@override
-  Future<Either<Failure , PassChangeModel>> passChange(Pass pass) async {
-  final ProfileWebService profileWebService=ProfileWebService();
+  @override
+  Future<Either<Failure, update_infoModel>> updateInfo(Update update) async {
+    final ProfileWebService profileWebService = ProfileWebService();
 
-  final info = await profileWebService.passChangeInfo(pass);
-  return Right(PassChangeModel.fromJson(info)) ;
-}
+    //const Update update=Update(name : "Abdullah Mansour" , email: "abdullah.mansour@gmail.com" ,  imagePath : "Li_logo.png");
 
-
-@override
-  Future<Either<Failure , update_infoModel>>  updateInfo(Update update) async {
-  final ProfileWebService profileWebService=ProfileWebService();
-
-
-  //const Update update=Update(name : "Abdullah Mansour" , email: "abdullah.mansour@gmail.com" ,  imagePath : "Li_logo.png");
-
-
-  final info = await profileWebService.update_Info(update);
-  return Right(update_infoModel.fromJson(info)) ;
-}
-
-
-
-
-
-
+    final info = await profileWebService.update_Info(update);
+    return Right(update_infoModel.fromJson(info));
+  }
 }
 
 
