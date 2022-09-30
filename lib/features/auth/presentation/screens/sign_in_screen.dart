@@ -26,6 +26,7 @@ class _SignInScreenState extends State<SignInScreen> {
         key: formKey,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Color(0x302F30),
             elevation: 0,
           ),
           body: SafeArea(

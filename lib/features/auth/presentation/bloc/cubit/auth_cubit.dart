@@ -60,7 +60,6 @@ class AuthCubit extends Cubit<AuthState> {
     var parameters = LoginParameter(createAuthUser(true));
     emit(AuthSignInLoading());
     var result = await _loginUseCase.call(parameters);
-    print('reach Your');
 
     result.fold((l) {
       emit(AuthSignInError(l.message));
@@ -69,7 +68,7 @@ class AuthCubit extends Cubit<AuthState> {
     }, (r) async {
       await _shaerdPrefPostUseCase.call(
           value: r.apiToken, key: sharedApiTokenKey);
-      Navigator.pushReplacementNamed(context, AppRoutingNames.homeScreen);
+      Navigator.pushReplacementNamed(context, AppRoutingNames.homeNavScreen);
 
       emit(AuthSignInSuccess());
     });

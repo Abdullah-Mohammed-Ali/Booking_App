@@ -2,10 +2,13 @@ import 'package:booking_app/core/utils/app_colors.dart';
 import 'package:booking_app/features/explore/persentation/bloc/hotels_bloc.dart';
 import 'package:booking_app/features/explore/persentation/pages/book_now.dart';
 import 'package:booking_app/features/explore/persentation/widgets/buttonWiget.dart';
+import 'package:booking_app/routing/app_routing_names.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../domain/entities/hotels.dart';
 import '../widgets/messgae.dart';
 
 class HotelsPage extends StatefulWidget {
@@ -35,24 +38,17 @@ class _HotelsPageState extends State<HotelsPage> {
     //BlocProvider.of<HotelsBloc>(context).GetProfileInfoEvent();
   }
 
-  Text _buildRatingStars(double rating) {
-    String stars = '';
-    for (int i = 0; i < rating; i++) {
-      stars += '⭐ ';
-    }
-    stars.trim();
-    return Text(
-      stars,
-      style: TextStyle(fontSize: 8),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        floatingActionButton: ListOrMapButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutingNames.mapsScreen);
+          },
+        ),
         backgroundColor: Colors.grey.shade900,
 
         //
@@ -209,224 +205,8 @@ class _HotelsPageState extends State<HotelsPage> {
                     itemCount: state.hotels.data?.data2?.length ?? 3,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => BookNow(
-                                      image:
-                                          "http://api.mahmoudtaha.com/images/${state.hotels.data?.data2?[index].hotelImages?[0].image}",
-                                      adress: state.hotels.data?.data2?[index]
-                                              .address ??
-                                          "Roma fgfgm gfn",
-                                      name: state.hotels.data?.data2?[index]
-                                              .name ??
-                                          "Grand Royal Hotel",
-                                      price: state.hotels.data?.data2?[index]
-                                              .price ??
-                                          "Grand Royal",
-                                      facilities: state
-                                              .hotels
-                                              .data
-                                              ?.data2?[index]
-                                              .hotelFacilities?[0]
-                                              .facilityId ??
-                                          "Grand Royal",
-                                      hoteId:
-                                          state.hotels.data?.data2?[index].id,
-                                      userId: 22,
-                                    )),
-                          );
-                        },
-                        child: Stack(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(
-                                  40.0, 5.0, 20.0, 5.0),
-                              height: 200.0,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: AppColors.darkGrey,
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    100.0, 20.0, 20.0, 20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                            width: 170,
-                                            child: state
-                                                            .hotels
-                                                            .data
-                                                            ?.data2?[index]
-                                                            .name !=
-                                                        "Roma fgfgm gfn" &&
-                                                    state
-                                                            .hotels
-                                                            .data
-                                                            ?.data2?[index]
-                                                            .name !=
-                                                        "Nasr Ciry Price 5000"
-                                                ? Text(
-                                                    state
-                                                            .hotels
-                                                            .data
-                                                            ?.data2?[index]
-                                                            .name ??
-                                                        "Grand Royal Hotel",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                  )
-                                                : Text(
-                                                    "Grand Royal",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 15.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                  )),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      state.hotels.data?.data2?[index]
-                                              .address ??
-                                          "Roma fgfgm gfn",
-                                      style: TextStyle(
-                                        fontSize: 7,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        SizedBox(
-                                          height: 30,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.wrong_location_rounded,
-                                                  size: 13,
-                                                  color: Colors.grey,
-                                                ),
-                                                Text(
-                                                  " ${index + 3} km to city",
-                                                  style: TextStyle(
-                                                    fontSize: 9,
-                                                    color: Colors.grey,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "\$",
-                                                  style: TextStyle(
-                                                      color: Colors.teal,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15),
-                                                ), // <-- Text
-
-                                                Text(
-                                                  state
-                                                          .hotels
-                                                          .data
-                                                          ?.data2?[index]
-                                                          .price ??
-                                                      "Grand Royal",
-                                                  style: TextStyle(
-                                                      color: Colors.teal,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15),
-                                                ), // <-- Text
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        state.hotels.data?.data2?[index].rate ==
-                                                "10.50"
-                                            ? _buildRatingStars(5)
-                                            : _buildRatingStars(4),
-                                        Text(
-                                          '/per night',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.white54,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "${state.hotels.data?.data2?[index].rate ?? "Grand Hotel"} out from 5 stars",
-                                      style: TextStyle(fontSize: 7),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 10.0,
-                              top: 15.0,
-                              bottom: 15.0,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(23.0),
-                                child: Image(
-                                  image: NetworkImage(
-                                    "http://api.mahmoudtaha.com/images/${state.hotels.data?.data2?[index].hotelImages?[0].image ?? "Grand Hotel"}",
-                                  ),
-
-                                  //img[index],
-
-                                  width: 120,
-
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      return HotelItem(
+                          context, state.hotels.data!.data2![index], index);
                     },
                   ),
                 ),
@@ -452,4 +232,217 @@ class _HotelsPageState extends State<HotelsPage> {
       },
     );
   }
+}
+
+class ListOrMapButton extends StatelessWidget {
+  const ListOrMapButton({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+  final VoidCallback onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.h,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0x302F30),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusDirectional.circular(15))),
+          onPressed: onPressed,
+          child: Container(
+            width: 120,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Icon(Icons.location_city), Text('Maps view ')],
+            ),
+          )),
+    );
+  }
+}
+
+InkWell HotelItem(BuildContext context, Data2 hotelData, int index) {
+  return InkWell(
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+    hoverColor: Colors.transparent,
+    onTap: () {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => BookNow(
+                  image:
+                      "http://api.mahmoudtaha.com/images/${hotelData.hotelImages?[0].image}",
+                  adress: hotelData.address ?? "Roma fgfgm gfn",
+                  name: hotelData.name ?? "Grand Royal Hotel",
+                  price: hotelData.price ?? "Grand Royal",
+                  facilities:
+                      hotelData.hotelFacilities?[0].facilityId ?? "Grand Royal",
+                  hoteId: hotelData.id,
+                  userId: 22,
+                )),
+      );
+    },
+    child: Stack(
+      children: [
+        Container(
+          margin: const EdgeInsets.fromLTRB(40.0, 5.0, 20.0, 5.0),
+          height: 200.0,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppColors.darkGrey,
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                        width: 170,
+                        child: hotelData.name != "Roma fgfgm gfn" &&
+                                hotelData.name != "Nasr Ciry Price 5000"
+                            ? Text(
+                                hotelData.name ?? "Grand Royal Hotel",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              )
+                            : Text(
+                                "Grand Royal",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              )),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  hotelData.address ?? "Roma fgfgm gfn",
+                  style: TextStyle(
+                    fontSize: 7,
+                    color: Colors.grey,
+                  ),
+                ),
+                Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.wrong_location_rounded,
+                              size: 13,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              " ${index + 3} km to city",
+                              style: TextStyle(
+                                fontSize: 9,
+                                color: Colors.grey,
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "\$",
+                              style: TextStyle(
+                                  color: Colors.teal,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ), // <-- Text
+
+                            Text(
+                              hotelData.price ?? "Grand Royal",
+                              style: TextStyle(
+                                  color: Colors.teal,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ), // <-- Text
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    hotelData.rate == "10.50"
+                        ? _buildRatingStars(5)
+                        : _buildRatingStars(4),
+                    Text(
+                      '/per night',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Colors.white54,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "${hotelData.rate ?? "Grand Hotel"} out from 5 stars",
+                  style: TextStyle(fontSize: 7),
+                )
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          left: 10.0,
+          top: 15.0,
+          bottom: 15.0,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(23.0),
+            child: Image(
+              image: NetworkImage(
+                "http://api.mahmoudtaha.com/images/${hotelData.hotelImages?[0].image ?? "Grand Hotel"}",
+              ),
+
+              //img[index],
+
+              width: 120,
+
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Text _buildRatingStars(double rating) {
+  String stars = '';
+  for (int i = 0; i < rating; i++) {
+    stars += '⭐ ';
+  }
+  stars.trim();
+  return Text(
+    stars,
+    style: TextStyle(fontSize: 8),
+  );
 }

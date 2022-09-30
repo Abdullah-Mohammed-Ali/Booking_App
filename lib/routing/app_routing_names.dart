@@ -7,4 +7,6 @@ class AppRoutingNames {
   static const String homeScreen = "Home screen";
   static const String homeNavScreen = "Home Navigation screen";
   static const String mapsScreen = "maps screen";
+  static const String searchScreen = "search screen";
+  static const String filterScreen = "filter screen";
 }

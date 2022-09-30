@@ -56,15 +56,12 @@ class DefaultTextFormField extends StatelessWidget {
               keyboardType: keyboardType,
               obscureText: isPassword ?? false,
               controller: controller,
-              style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 suffixIcon: suffix,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 hintText: hintText ?? '',
                 isDense: true,
-                filled: true,
-                fillColor: Colors.white,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.h),
                   borderSide: const BorderSide(color: Colors.white),
