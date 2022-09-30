@@ -13,6 +13,18 @@ class ServerFailure extends Failure {
   const ServerFailure(super.message);
 }
 
-class DatabaseFailure extends Failure{
+class OfflineFailure extends Failure {
+  OfflineFailure(super.message);
+}
+
+class EmptyCacheFailure extends Failure {
+  EmptyCacheFailure(super.message);
+}
+
+class WrongDataFailure extends Failure {
+  WrongDataFailure(super.message);
+}
+
+class DatabaseFailure extends Failure {
   const DatabaseFailure(super.message);
 }

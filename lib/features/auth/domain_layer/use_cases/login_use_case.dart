@@ -6,7 +6,6 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/usecase/base_use_case.dart';
-import '../../../booking/domain_layer/entities/user_entity.dart';
 import '../entity/auth_user.dart';
 
 class LoginUseCase extends BaseUseCase<AuthUserEntity, LoginParameter> {
