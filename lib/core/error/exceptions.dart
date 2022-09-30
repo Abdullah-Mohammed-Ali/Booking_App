@@ -6,6 +6,10 @@ class ServerException implements Exception {
   const ServerException({required this.errorMessageModel});
 }
 
+class EmptyCacheException implements Exception {}
+
+class OfflineException implements Exception {}
+
 class LocalDatabaseException implements Exception {
   final String message;
 

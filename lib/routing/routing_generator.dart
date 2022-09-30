@@ -1,4 +1,4 @@
-import 'package:booking_app/features/booking/presentation/screens/hotels_maps_screen.dart';
+import 'package:booking_app/features/home_nav/presentation/screens/explore_screen.dart';
 import 'package:booking_app/features/home_nav/presentation/screens/home_nav.dart';
 import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../features/auth/presentation/screens/forget_pass_screen.dart';
 import '../features/auth/presentation/screens/sign_in_screen.dart';
 import '../features/auth/presentation/screens/sign_up_screen.dart';
-import '../features/explore/presentation/screens/explore_screen.dart';
 import '../features/splash/presentaion/screens/onboarding_screen.dart';
 import '../features/splash/presentaion/screens/splash_screen.dart';
 
@@ -26,9 +25,9 @@ class AppRoute {
       case AppRoutingNames.homeScreen:
         return _fadeInRoute(page: const ExploreScreen());
       case AppRoutingNames.homeNavScreen:
-        return _fadeInRoute(page: const HomeNavScreen());
+        return _fadeInRoute(page: const HomeView());
       case AppRoutingNames.mapsScreen:
-        return _fadeInRoute(page: const HotelsMapScreen());
+        return _fadeInRoute(page: const HomeView());
     }
   }
 
@@ -36,9 +35,9 @@ class AppRoute {
     return PageRouteBuilder(
         pageBuilder: (_, a1, a2) => page,
         transitionsBuilder: (_, a1, a2, child) => FadeTransition(
-              opacity: a1,
-              child: child,
-            ),
+          opacity: a1,
+          child: child,
+        ),
         transitionDuration: Duration(milliseconds: durationInMillisec));
   }
 }
