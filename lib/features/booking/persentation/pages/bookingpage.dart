@@ -240,14 +240,14 @@ class _BookingPageState extends State<BookingPage>
                         imageChanged = state.booking.data?.data?[index].hotel
                             ?.hotelImages?[1].image;
 
-                        print("what the fuck");
+                        print("what ");
                         //imageChanged=null;
 
                         hotelImagesList.clear();
                       }
                     } else {}
 
-//kkkkkkkk
+//kkkkkkkkkk
 
                     //print(imageChanged);
                     print(state.booking.data?.data?[index].hotel
