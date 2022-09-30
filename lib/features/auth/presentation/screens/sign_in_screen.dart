@@ -25,10 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Form(
         key: formKey,
         child: Scaffold(
-          backgroundColor: Colors.grey.shade100,
           appBar: AppBar(
-            iconTheme: const IconThemeData(color: Colors.black),
-            backgroundColor: Colors.grey.shade100,
             elevation: 0,
           ),
           body: SafeArea(
@@ -47,7 +44,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                 .textTheme
                                 .displaySmall!
                                 .copyWith(
-                                    color: Colors.black,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 25.sp)),
                         SizedBox(

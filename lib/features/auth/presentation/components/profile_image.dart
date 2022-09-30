@@ -36,7 +36,6 @@ class ProfileImage extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.cover,
                   child: CircleAvatar(
-                    backgroundColor: Colors.blueGrey,
                     child: IconButton(
                       onPressed: onPressed,
                       icon: Icon(

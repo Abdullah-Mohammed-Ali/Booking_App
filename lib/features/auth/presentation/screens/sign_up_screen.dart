@@ -30,10 +30,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           var cubit = AuthCubit.get(context);
 
           return Scaffold(
-            backgroundColor: Colors.grey.shade100,
             appBar: AppBar(
-              iconTheme: const IconThemeData(color: Colors.black),
-              backgroundColor: Colors.grey.shade100,
+              backgroundColor: Color(0x302F30),
               elevation: 0,
             ),
             body: SafeArea(
@@ -55,7 +53,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 .textTheme
                                 .displaySmall!
                                 .copyWith(
-                                    color: Colors.black,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 25.sp)),
                         SizedBox(

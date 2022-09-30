@@ -12,7 +12,6 @@ import 'package:booking_app/features/explore/persentation/pages/hotelspage.dart'
 import 'package:booking_app/features/profile/persentation/pages/editProfile.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'features/profile/persentation/bloc/profile_bloc.dart';
@@ -20,8 +19,6 @@ import 'features/profile/persentation/pages/profilePage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'routing/routing_generator.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,20 +36,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    GetBooking getBooking =GetBooking(
-        count: 9 ,
-        upcoming: "upcomming"
-
-    );
+    GetBooking getBooking = GetBooking(count: 9, upcoming: "upcomming");
 
     return MultiBlocProvider(
-
       providers: [
-        BlocProvider(create: (_) => di.sl<ProfileBloc>()..add(GetProfileInfoEvent())),
-        BlocProvider(create: (_) => di.sl<BookingBloc>()..add(GetBookingEvent(getBooking: getBooking))),
+        BlocProvider(
+            create: (_) => di.sl<ProfileBloc>()..add(GetProfileInfoEvent())),
+        BlocProvider(
+            create: (_) => di.sl<BookingBloc>()
+              ..add(GetBookingEvent(getBooking: getBooking))),
         BlocProvider(create: (_) => di.sl<HotelsBloc>()..add(GetHotelsEvent())),
-
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 750),
@@ -64,19 +57,12 @@ class MyApp extends StatelessWidget {
               /* dark theme settings */
             ),
             themeMode: ThemeMode.dark,
-
-
-
             debugShowCheckedModeBanner: false,
             title: 'Booking App',
             onGenerateRoute: AppRoute.onGenerateRoute,
             initialRoute: GlobalApiToken == ''
                 ? AppRoutingNames.splash
                 : AppRoutingNames.homeNavScreen,
-
-
-
-
           );
         },
       ),
