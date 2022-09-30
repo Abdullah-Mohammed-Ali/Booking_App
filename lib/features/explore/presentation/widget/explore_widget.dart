@@ -1,3 +1,4 @@
+import 'package:booking_app/features/auth/presentation/components/default_text_form_field.dart';
 import 'package:booking_app/features/explore/models/hotels_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,11 +38,13 @@ class _HomeWidgetState extends State<HomeWidget> {
               SliverAppBar(
                 backgroundColor: Colors.transparent,
                 expandedHeight: 350,
+                pinned: true,
+                title: Text('sgdg'),
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     height: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
+                      // borderRadius: BorderRadius.circular(30.0),
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.white,
@@ -50,18 +53,29 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ],
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: const Image(
-                        image: NetworkImage(
-                          'https://img.freepik.com/free-photo/housekeeper-cleaning-hotel-room_53876-30786.jpg?w=1480&t=st=1664018135~exp=1664018735~hmac=8f6f2699198af0eb3e2b5ce36c44ce265babaf2921bac5722337787e1c8f8afd',
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: const Image(
+                            image: NetworkImage(
+                              'https://img.freepik.com/free-photo/housekeeper-cleaning-hotel-room_53876-30786.jpg?w=1480&t=st=1664018135~exp=1664018735~hmac=8f6f2699198af0eb3e2b5ce36c44ce265babaf2921bac5722337787e1c8f8afd',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        fit: BoxFit.cover,
-                      ),
+                        Positioned(
+                          top: 40,
+                          right: 0,
+                          left: 0,
+                          height: 60.h,
+                          child: TextFormField(),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                floating: true,
               ),
             ]),
         body: ListView.builder(
