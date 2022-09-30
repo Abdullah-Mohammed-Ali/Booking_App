@@ -84,144 +84,144 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
   Widget build(BuildContext context) {
 
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey.shade900,
+        child: Scaffold(
+            backgroundColor: Colors.grey.shade900,
 
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              // give the tab bar a height [can change hheight to preferred height]
+            body: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  // give the tab bar a height [can change hheight to preferred height]
 
-             // Row(
-             //   children: [
-             //     Text("My Trip" ,
-             //       style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),
-             //     ),
-             //   ],
-             // ),
-              SizedBox(height: 10,),
+                  // Row(
+                  //   children: [
+                  //     Text("My Trip" ,
+                  //       style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),
+                  //     ),
+                  //   ],
+                  // ),
+                  SizedBox(height: 10,),
 
-              Container(
-                height: 45,
+                  Container(
+                    height: 45,
 
-                decoration: BoxDecoration(
-                  color: Colors.white10,
-                  borderRadius: BorderRadius.circular(
-                    25.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: BorderRadius.circular(
+                        25.0,
+                      ),
+                    ),
+                    child: TabBar(
+                      controller: _tabController,
+                      //give the indicator a decoration (color and border radius)
+                      indicator: BoxDecoration(
+
+                        borderRadius: BorderRadius.circular(
+                          40.0,
+                        ),
+
+                        color: Colors.teal,
+                      ),
+
+
+
+                      onTap: ( pageNumber){
+
+                        print(pageNumber);
+
+                        if(pageNumber ==0){
+
+                          GetBooking getBooking =GetBooking(
+                              count: 9 ,
+                              upcoming: "upcomming"
+
+                          );
+                          BlocProvider.of<BookingBloc>(context).add((GetBookingEvent(getBooking:getBooking )));
+
+                        }
+
+                        if(pageNumber ==1){
+                          GetBooking getBooking =GetBooking(
+                              count: 9 ,
+                              upcoming: "cancelled"
+
+                          );
+                          BlocProvider.of<BookingBloc>(context).add((GetBookingEvent(getBooking:getBooking )));
+
+
+                        }
+
+                        if(pageNumber ==2){
+
+                          GetBooking getBooking =GetBooking(
+                              count: 9 ,
+                              upcoming: "completed"
+
+                          );
+                          BlocProvider.of<BookingBloc>(context).add((GetBookingEvent(getBooking:getBooking )));
+
+
+                        }
+
+
+
+
+
+
+
+                      },
+                      labelColor: Colors.white,
+                      indicatorColor: Colors.transparent,
+                      isScrollable: true,
+
+
+                      unselectedLabelColor: Colors.grey,
+                      unselectedLabelStyle: TextStyle(fontSize: 10 , fontWeight: FontWeight.bold),
+                      labelStyle: TextStyle(fontSize: 11 , fontWeight: FontWeight.bold),
+                      tabs: [
+                        // first tab [you can add an icon using the icon property]
+                        Tab(
+                          text: 'Upcoming',
+                        ),
+
+                        // second tab [you can add an icon using the icon property]
+                        Tab(
+                          text: 'Cancelled',
+                        ),
+
+                        Tab(
+                          text: 'Finished',
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                child: TabBar(
-                  controller: _tabController,
-                  //give the indicator a decoration (color and border radius)
-                  indicator: BoxDecoration(
+                  // tab bar view here
+                  Expanded(
+                    child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
 
-                    borderRadius: BorderRadius.circular(
-                      40.0,
+                      controller: _tabController,
+                      children: [
+                        // first tab bar view widget
+                        Center(
+                            child: _buildBody()
+                        ),
+
+                        // second tab bar view widget
+                        Center(
+                            child: _buildBody()
+                        ),
+
+                        Center(
+                            child: _buildBody()
+                        ),
+                      ],
                     ),
-
-                    color: Colors.teal,
                   ),
-
-
-
-                  onTap: ( pageNumber){
-
-                    print(pageNumber);
-
-                    if(pageNumber ==0){
-
-                      GetBooking getBooking =GetBooking(
-                          count: 9 ,
-                          upcoming: "upcomming"
-
-                      );
-                      BlocProvider.of<BookingBloc>(context).add((GetBookingEvent(getBooking:getBooking )));
-
-                    }
-
-                    if(pageNumber ==1){
-                      GetBooking getBooking =GetBooking(
-                          count: 9 ,
-                          upcoming: "cancelled"
-
-                      );
-                      BlocProvider.of<BookingBloc>(context).add((GetBookingEvent(getBooking:getBooking )));
-
-
-                    }
-
-                    if(pageNumber ==2){
-
-                      GetBooking getBooking =GetBooking(
-                          count: 9 ,
-                          upcoming: "completed"
-
-                      );
-                      BlocProvider.of<BookingBloc>(context).add((GetBookingEvent(getBooking:getBooking )));
-
-
-                    }
-
-
-
-
-
-
-
-                  },
-                  labelColor: Colors.white,
-                  indicatorColor: Colors.transparent,
-                  isScrollable: true,
-
-
-                  unselectedLabelColor: Colors.grey,
-                  unselectedLabelStyle: TextStyle(fontSize: 10 , fontWeight: FontWeight.bold),
-                  labelStyle: TextStyle(fontSize: 11 , fontWeight: FontWeight.bold),
-                  tabs: [
-                    // first tab [you can add an icon using the icon property]
-                    Tab(
-                      text: 'Upcoming',
-                    ),
-
-                    // second tab [you can add an icon using the icon property]
-                    Tab(
-                      text: 'Cancelled',
-                    ),
-
-                    Tab(
-                      text: 'Finished',
-                    ),
-                  ],
-                ),
+                ],
               ),
-              // tab bar view here
-              Expanded(
-                child: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
-
-                  controller: _tabController,
-                  children: [
-                    // first tab bar view widget
-                    Center(
-                      child: _buildBody()
-                    ),
-
-                    // second tab bar view widget
-                    Center(
-                        child: _buildBody()
-                    ),
-
-                    Center(
-                        child: _buildBody()
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            )
         )
-      )
     );
 
 
@@ -268,12 +268,12 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
             return
               SingleChildScrollView(
 
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(bottom: 10),
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(bottom: 10),
 
-                scrollDirection: Axis.vertical,
+                  scrollDirection: Axis.vertical,
 
-                child: ListView.separated(
+                  child: ListView.separated(
 
 
 
@@ -292,12 +292,12 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
 
                       //imageChanged=state.booking.data?.data?[index].hotel?.hotelImages?[1].image;
 
-                        List ?facilities=state.booking.data?.data?[index].hotel?.facilities;
+                      List ?facilities=state.booking.data?.data?[index].hotel?.facilities;
 
 
-                        //List ?Fac= state.booking.data?.data?[index].hotel?.facilities?[0].image;
+                      //List ?Fac= state.booking.data?.data?[index].hotel?.facilities?[0].image;
 
-                        List<HotelImages> ?hotelImages2 =state.booking.data?.data?[index].hotel?.hotelImages ?? [];
+                      List<HotelImages> ?hotelImages2 =state.booking.data?.data?[index].hotel?.hotelImages ?? [];
 
 
 
@@ -309,46 +309,46 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
 
                       //  print(imageChanged);
 
-                        for(int i=0 ; i<hotelImages2.length ; i++){
-                         // print(i);
+                      for(int i=0 ; i<hotelImages2.length ; i++){
+                        // print(i);
 
-                          var value =hotelImages2[i].image;
+                        var value =hotelImages2[i].image;
 
-                          hotelImagesList.add(value!);
-
-
-
-                          // print(value);
-
-                        }
+                        hotelImagesList.add(value!);
 
 
-                        if(imageChanged!=null) {
-                          if (hotelImagesList.contains(imageChanged)) {
-                            print("sameeeeeeeeeeeeeeeeee");
 
-                            imageChanged = hotelImages2[index].image;
+                        // print(value);
 
-                            hotelImagesList.clear();
+                      }
 
-                            //break;
 
-                          }
-                          else {
-                            print("elseeeeeeeeeeeeeeee");
-                            imageChanged = state.booking.data?.data?[index]
-                                .hotel?.hotelImages?[1].image;
+                      if(imageChanged!=null) {
+                        if (hotelImagesList.contains(imageChanged)) {
+                          print("sameeeeeeeeeeeeeeeeee");
 
-                            print("what the fuck");
-                            //imageChanged=null;
+                          imageChanged = hotelImages2[index].image;
 
-                            hotelImagesList.clear();
-                          }
-                        }
-                        else{
+                          hotelImagesList.clear();
 
+                          //break;
 
                         }
+                        else {
+                          print("elseeeeeeeeeeeeeeee");
+                          imageChanged = state.booking.data?.data?[index]
+                              .hotel?.hotelImages?[1].image;
+
+                          print("what the fuck");
+                          //imageChanged=null;
+
+                          hotelImagesList.clear();
+                        }
+                      }
+                      else{
+
+
+                      }
 
 
 
@@ -358,47 +358,47 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
 //kkkkkkkk
 
 
-                        //print(imageChanged);
-                        print(state.booking.data?.data?[index].hotel?.hotelImages?[1].image);
+                      //print(imageChanged);
+                      print(state.booking.data?.data?[index].hotel?.hotelImages?[1].image);
 
-                        List<Facilities> ?images =[];
-                        List<String> names =[];
+                      List<Facilities> ?images =[];
+                      List<String> names =[];
 
-                        //kimo
-
-
-
-                        // String ?image1;
-                        // String ?image2;
-                        // String ?name1;
-                        // String ?name2;
-                        if(facilities?.length !=0){
-
-
-                          images=state.booking.data?.data?[index].hotel?.facilities;
-
-
-                          // image1= state.booking.data?.data?[index].hotel?.facilities?[0].image;
-                          //
-                          // image2= state.booking.data?.data?[index].hotel?.facilities?[1].image;
-                          //
-                          // name1=state.booking.data?.data?[index].hotel?.facilities?[0].name;
-                          // name2=state.booking.data?.data?[index].hotel?.facilities?[1].name;
-
-                        }
-
-                        else{
-
-                          // image1 ="";
-                          // image2="";
-                          // name1 ="";
-                          // name2="";
-
-                          images=[];
+                      //kimo
 
 
 
-                        }
+                      // String ?image1;
+                      // String ?image2;
+                      // String ?name1;
+                      // String ?name2;
+                      if(facilities?.length !=0){
+
+
+                        images=state.booking.data?.data?[index].hotel?.facilities;
+
+
+                        // image1= state.booking.data?.data?[index].hotel?.facilities?[0].image;
+                        //
+                        // image2= state.booking.data?.data?[index].hotel?.facilities?[1].image;
+                        //
+                        // name1=state.booking.data?.data?[index].hotel?.facilities?[0].name;
+                        // name2=state.booking.data?.data?[index].hotel?.facilities?[1].name;
+
+                      }
+
+                      else{
+
+                        // image1 ="";
+                        // image2="";
+                        // name1 ="";
+                        // name2="";
+
+                        images=[];
+
+
+
+                      }
 
 
 
@@ -461,11 +461,9 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
 
                                   "http://api.mahmoudtaha.com/images/${imageChanged ??"Grand Hotel"}"
 
-                                  :
+                                      :
 
-                                    "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[1].image ??"Grand Hotel"}" ,
-
-
+                                  "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[1].image ??"Grand Hotel"}" ,
 
 
 
@@ -473,7 +471,9 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
 
 
 
-                                //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
+
+
+                                  //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
                                   height: 300,
                                   width: MediaQuery.of(context).size.width,
                                   fit: BoxFit.fill,
@@ -502,7 +502,7 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
                                           });
                                           print("pressed");
 
-                                        //  print(hotelImages2[index].image);
+                                          //  print(hotelImages2[index].image);
                                           print(imageChanged);
 
 
@@ -532,15 +532,15 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
                                         width: 150,
                                         child: Text(
 
-                              state.booking.data?.data?[index].hotel?.name.toString() ?? "Grand Royal Hotel",
+                                          state.booking.data?.data?[index].hotel?.name.toString() ?? "Grand Royal Hotel",
 
 
 
 
-                                           style: TextStyle(
-                                          fontSize: 13, fontWeight: FontWeight.bold
+                                          style: TextStyle(
+                                              fontSize: 13, fontWeight: FontWeight.bold
 
-                                        ),),
+                                          ),),
                                       ),
                                     ],
                                   ),
@@ -810,7 +810,7 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
                     itemCount:
 
                     state.booking.data?.data?.length ?? 1,
-                )
+                  )
               );
 
 
@@ -833,7 +833,7 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
 
 
             return MaterialButton(
-                  key: Key("1"),
+              key: Key("1"),
 
               onPressed: (){
                 print(state.bookingStatus);
@@ -842,10 +842,10 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
 
 
               },
-            //   child:  CircularProgressIndicator(
-            //
-            //   color: Colors.teal,
-            // ),
+              //   child:  CircularProgressIndicator(
+              //
+              //   color: Colors.teal,
+              // ),
 
 
 
@@ -884,18 +884,18 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
           return
             MaterialButton(
 
-              onPressed: (){
+                onPressed: (){
 
-                //BlocProvider.of<BookingBloc>(context).add(GetBookingEvent());
+                  //BlocProvider.of<BookingBloc>(context).add(GetBookingEvent());
 
-                //BlocProvider.of<BookingBloc>(context).getProfileInfo;
-                print("i presed");
+                  //BlocProvider.of<BookingBloc>(context).getProfileInfo;
+                  print("i presed");
 
-              },
-              child: Container(child: Text("nothing " ,style: TextStyle(
-                  fontSize: 45
+                },
+                child: Container(child: Text("nothing " ,style: TextStyle(
+                    fontSize: 45
 
-              ), ),)
+                ), ),)
 
 
 
