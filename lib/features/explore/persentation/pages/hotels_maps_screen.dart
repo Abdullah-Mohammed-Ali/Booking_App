@@ -76,6 +76,8 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
                               Marker currentMarker = Marker(
                                 markerId: MarkerId(index.toString()),
                                 position: currentHotelPos,
+                                infoWindow:
+                                    InfoWindow(title: '\$ ${item.price}'),
                               );
 
                               SchedulerBinding.instance.addPostFrameCallback(
@@ -89,6 +91,8 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
                               );
                               markers!.clear();
                               markers!.add(currentMarker);
+                              snapshot.data?.showMarkerInfoWindow(
+                                  MarkerId(index.toString()));
 
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width,
