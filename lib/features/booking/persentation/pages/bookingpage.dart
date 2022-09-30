@@ -498,7 +498,7 @@ class _BookingPageState extends State<BookingPage> with SingleTickerProviderStat
                                         onTap: (){
                                           imageChanged= state.booking.data?.data?[index].hotel?.hotelImages?[i].image;
                                           setState(() {
-
+//
                                           });
                                           print("pressed");
 
