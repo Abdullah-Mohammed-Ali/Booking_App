@@ -43,6 +43,7 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
             body: Stack(
               children: [
                 GoogleMap(
+                    myLocationButtonEnabled: false,
                     onMapCreated: ((controller) {
                       controllerForMap.complete(controller);
                     }),
@@ -54,7 +55,7 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
                     builder: (BuildContext context,
                         AsyncSnapshot<GoogleMapController> snapshot) {
                       return Positioned(
-                        bottom: 25.h,
+                        bottom: 35.h,
                         child: Container(
                           height: 200,
                           width: MediaQuery.of(context).size.width,
@@ -62,40 +63,19 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
                             controller: mapsListController,
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
-                            cacheExtent: 8,
+                            cacheExtent: 1,
                             separatorBuilder: (context, index) =>
                                 const Divider(),
-                            padding:
-                                const EdgeInsets.only(top: 10.0, bottom: 15.0),
+                            padding: const EdgeInsets.only(
+                              right: 15.0,
+                            ),
                             itemCount: state.hotels.data?.data2?.length ?? 3,
                             itemBuilder: (BuildContext context, int index) {
                               var item = state.hotels.data!.data2![index];
-                              LatLng currentHotelPos = LatLng(
-                                  double.parse(item.latitude!),
-                                  double.parse(item.longitude!));
-                              Marker currentMarker = Marker(
-                                markerId: MarkerId(index.toString()),
-                                position: currentHotelPos,
-                                infoWindow:
-                                    InfoWindow(title: '\$ ${item.price}'),
-                              );
-
-                              SchedulerBinding.instance.addPostFrameCallback(
-                                (timeStamp) {
-                                  setState(() {
-                                    snapshot.data!.animateCamera(
-                                        CameraUpdate.newLatLng(
-                                            currentHotelPos));
-                                  });
-                                },
-                              );
-                              markers!.clear();
-                              markers!.add(currentMarker);
-                              snapshot.data?.showMarkerInfoWindow(
-                                  MarkerId(index.toString()));
+                              addMarker(item, index, snapshot);
 
                               return SizedBox(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width + 5,
                                 child: HotelItem(context,
                                     state.hotels.data!.data2![index], index),
                               );
@@ -111,5 +91,27 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
         },
       ),
     );
+  }
+
+  void addMarker(
+      Data2 item, int index, AsyncSnapshot<GoogleMapController> snapshot) {
+    LatLng currentHotelPos =
+        LatLng(double.parse(item.latitude!), double.parse(item.longitude!));
+    Marker currentMarker = Marker(
+      markerId: MarkerId('$index'),
+      position: currentHotelPos,
+      infoWindow: InfoWindow(title: '\$ ${item.price}'),
+    );
+
+    SchedulerBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        setState(() {
+          snapshot.data!.animateCamera(CameraUpdate.newLatLng(currentHotelPos));
+        });
+      },
+    );
+    markers!.clear();
+    markers!.add(currentMarker);
+    snapshot.data?.showMarkerInfoWindow(MarkerId('$index'));
   }
 }

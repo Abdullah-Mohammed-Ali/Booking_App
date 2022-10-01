@@ -2,101 +2,110 @@ import 'package:booking_app/core/utils/app_colors.dart';
 import 'package:booking_app/features/home_nav/presentation/components/search/default_text_form_field.dart';
 import 'package:booking_app/features/home_nav/presentation/components/search/search_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:booking_app/dependency_container.dart' as di;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../explore/persentation/bloc/hotels_bloc.dart';
+import '../../../explore/persentation/pages/hotelspage.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  var filterIsPressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.darkBcgrnd,
-      appBar: AppBar(
-        backgroundColor: AppColors.darkBcgrnd,
-        elevation: 0,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.close,
-              color: Colors.white,
-            )),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Search',
-              style: TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-              ),
+    return BlocProvider<HotelsBloc>(
+      create: (context) => di.sl<HotelsBloc>()..add(GetHotelsEvent()),
+      child: BlocBuilder<HotelsBloc, HotelsState>(
+        builder: (context, state) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: AppColors.darkBcgrnd,
+            appBar: AppBar(
+              backgroundColor: AppColors.darkBcgrnd,
+              title: Text('Explore'),
+              actions: [
+                IconButton(onPressed: (() {}), icon: Icon(Icons.map)),
+                IconButton(
+                    onPressed: (() {
+                      setState(() {
+                        filterIsPressed = !filterIsPressed;
+                      });
+                    }),
+                    icon: Icon(FontAwesomeIcons.filter)),
+              ],
+              elevation: 0,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .778514,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DefaultTextFormField(
-                      hint: 'Where are you going?',
-                      radius: 30,
-                      type: TextInputType.text,
-                      controller: TextEditingController(),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: AppColors.myGreen,
-                        size: 30,
-                      ),
-                      borderColor: AppColors.darkGrey,
-                      fillColor: AppColors.darkGrey,
-                      isFilled: true,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height - 157,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: DefaultTextFormField(
+                                    hint: 'Where are you going?',
+                                    radius: 30,
+                                    type: TextInputType.text,
+                                    controller: TextEditingController(),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: AppColors.myGreen,
+                                      size: 30,
+                                    ),
+                                    borderColor: AppColors.darkGrey,
+                                    fillColor: AppColors.darkGrey,
+                                    isFilled: true,
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: (() {}),
+                                    icon: Icon(Icons.search))
+                              ],
+                            ),
+                          ),
+                        ),
+                        if (state is GetHotelsState)
+                          Expanded(
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              cacheExtent: 8,
+                              separatorBuilder: (context, index) =>
+                                  const Divider(),
+                              padding: const EdgeInsets.only(bottom: 15.0),
+                              itemCount: state.hotels.data?.data2?.length ?? 3,
+                              itemBuilder: (BuildContext context, int index) {
+                                return HotelItem(context,
+                                    state.hotels.data!.data2![index], index);
+                              },
+                            ),
+                          ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GridView.builder(
-                      scrollDirection: Axis.vertical,
-                      primary: false,
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        childAspectRatio: .74,
-                        mainAxisExtent: 230,
-                      ),
-                      itemCount: 8,
-                      itemBuilder: (context, index) => const SearchCardWidget(
-                        address: 'Paris',
-                        imageUrl:
-                            'https://a0.muscache.com/im/pictures/078d5eb4-87a3-4271-bf9f-3d680e6de577.jpg',
-                        rate: "4.5",
-                        price: "200",
-                      ),
-                    ),
-                    // const SearchCardWidget(
-                    //   address: 'Paris',
-                    //   imageUrl:
-                    //       'https://a0.muscache.com/im/pictures/078d5eb4-87a3-4271-bf9f-3d680e6de577.jpg',
-                    //   rate: "4.5",
-                    //   price: "200",
-                    // ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -14,23 +14,15 @@ import 'package:booking_app/features/explore/domain/usecases/get_bookings.dart';
 import 'package:equatable/equatable.dart';
 import 'package:dartz/dartz.dart';
 
-
-
-
-
 part 'hotels_event.dart';
 part 'hotels_state.dart';
 
 class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
   final GetHotelsUsecase hotels;
 
-
   HotelsBloc({
-
-
-  required this.hotels,
-  })
-      : super(hotelsInitial()) {
+    required this.hotels,
+  }) : super(hotelsInitial()) {
     on<HotelsEvent>((event, emit) async {
       // TODO: implement event handler
 
@@ -39,37 +31,17 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
 
         final failureOrPosts = await hotels();
 
-
         emit(_mapfailureOrPostsState1(failureOrPosts));
-
       }
-
-
-      
-      
-      
-      
     });
   }
 }
 
-
-
-
-
-
-
-
-
-
 HotelsState _mapfailureOrPostsState1(Either<Failure, Hotels> either) {
   return either.fold(
-          (failure) => ErrorHotelsState(message: _mapFailureToMessage(failure)),
-          (profile_Info_object) => GetHotelsState(hotels: profile_Info_object));
+      (failure) => ErrorHotelsState(message: _mapFailureToMessage(failure)),
+      (profile_Info_object) => GetHotelsState(hotels: profile_Info_object));
 }
-
-
-
 
 String _mapFailureToMessage(Failure failure) {
   switch (failure.runtimeType) {
