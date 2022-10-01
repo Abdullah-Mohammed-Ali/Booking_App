@@ -43,6 +43,7 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
             body: Stack(
               children: [
                 GoogleMap(
+                    myLocationButtonEnabled: false,
                     onMapCreated: ((controller) {
                       controllerForMap.complete(controller);
                     }),
@@ -54,7 +55,7 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
                     builder: (BuildContext context,
                         AsyncSnapshot<GoogleMapController> snapshot) {
                       return Positioned(
-                        bottom: 25.h,
+                        bottom: 35.h,
                         child: Container(
                           height: 200,
                           width: MediaQuery.of(context).size.width,
