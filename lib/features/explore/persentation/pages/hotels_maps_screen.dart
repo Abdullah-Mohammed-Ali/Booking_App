@@ -97,8 +97,10 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
       Data2 item, int index, AsyncSnapshot<GoogleMapController> snapshot) {
     LatLng currentHotelPos =
         LatLng(double.parse(item.latitude!), double.parse(item.longitude!));
+
+    var markerID = MarkerId('$index + ${item.name}');
     Marker currentMarker = Marker(
-      markerId: MarkerId('$index'),
+      markerId: markerID,
       position: currentHotelPos,
       infoWindow: InfoWindow(title: '\$ ${item.price}'),
     );
@@ -112,6 +114,6 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
     );
     markers!.clear();
     markers!.add(currentMarker);
-    snapshot.data?.showMarkerInfoWindow(MarkerId('$index'));
+    snapshot.data?.showMarkerInfoWindow(markerID);
   }
 }
