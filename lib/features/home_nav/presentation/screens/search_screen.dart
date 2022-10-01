@@ -1,6 +1,7 @@
 import 'package:booking_app/core/utils/app_colors.dart';
 import 'package:booking_app/features/home_nav/presentation/components/search/default_text_form_field.dart';
 import 'package:booking_app/features/home_nav/presentation/components/search/search_card_widget.dart';
+import 'package:booking_app/routing/app_routing_names.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_app/dependency_container.dart' as di;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,11 @@ class _SearchScreenState extends State<SearchScreen> {
               backgroundColor: AppColors.darkBcgrnd,
               title: Text('Explore'),
               actions: [
-                IconButton(onPressed: (() {}), icon: Icon(Icons.map)),
+                IconButton(
+                    onPressed: (() {
+                      Navigator.pushNamed(context, AppRoutingNames.mapsScreen);
+                    }),
+                    icon: Icon(Icons.maps_ugc)),
                 IconButton(
                     onPressed: (() {
                       setState(() {
@@ -52,6 +57,15 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        if (filterIsPressed)
+                          Container(
+                            height: 150,
+                            child: GridView(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                            )),
+                          ),
                         Container(
                           height: 50,
                           child: Padding(

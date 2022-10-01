@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
             onGenerateRoute: AppRoute.onGenerateRoute,
             initialRoute: GlobalApiToken == ''
                 ? AppRoutingNames.splash
-                : AppRoutingNames.mapsScreen,
+                : AppRoutingNames.homeNavScreen,
           );
         },
       ),
