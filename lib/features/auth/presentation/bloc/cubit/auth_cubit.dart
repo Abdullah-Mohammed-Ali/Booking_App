@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../../core/globals.dart';
 import '../../../domain_layer/use_cases/shared_pref_use_cases/shared_pref_post_use_case.dart';
 
 part 'auth_state.dart';
@@ -66,6 +67,7 @@ class AuthCubit extends Cubit<AuthState> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(l.message)));
     }, (r) async {
+
       await _shaerdPrefPostUseCase.call(
           value: r.apiToken, key: sharedApiTokenKey);
       Navigator.pushReplacementNamed(context, AppRoutingNames.homeNavScreen);
@@ -84,10 +86,14 @@ class AuthCubit extends Cubit<AuthState> {
         content: Text(l.message),
       ));
     }, (r) async {
+
+      GlobalApiToken=r.apiToken!;
       print('Api token : ' + r.apiToken!);
+
+
       await _shaerdPrefPostUseCase.call(
           value: r.apiToken, key: sharedApiTokenKey);
-      Navigator.pushReplacementNamed(context, AppRoutingNames.homeScreen);
+      Navigator.pushReplacementNamed(context, AppRoutingNames.homeNavScreen);
 
       emit(AuthSignInSuccess());
     });

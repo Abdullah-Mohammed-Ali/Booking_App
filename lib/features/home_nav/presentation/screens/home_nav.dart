@@ -2,9 +2,14 @@
 
 import 'package:booking_app/features/booking/persentation/pages/bookingpage.dart';
 import 'package:booking_app/features/explore/persentation/pages/hotelspage.dart';
+import 'package:booking_app/features/home_nav/presentation/components/animatedIndexStack.dart';
 import 'package:booking_app/features/profile/persentation/pages/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+import 'package:animations/animations.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -16,18 +21,39 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
   int _currentIndex = 0;
+  late PageController _pageController;
+
+
   final List<Widget> _views = [
-    HotelsPage(),
-    BookingPage(),
-    ProfilePage(),
+    Stack(
+      children: [
+        HotelsPage(),
+      ],
+    ),
+    Stack(
+      children: [
+        BookingPage(),
+      ],
+    ),
+    Stack(
+      children: [
+        ProfilePage(),
+      ],
+    ),
   ];
 
   @override
   void initState() {
+    _pageController = PageController();
+
 
     super.initState();
   }
-
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
 
   @override
@@ -35,16 +61,47 @@ class _HomeViewState extends State<HomeView> {
     return
 
       Scaffold(
-        body: IndexedStack(
-          children: _views,
+       // extendBody: true,
+        body:
+
+
+
+        // AnimatedIndexedStack(
+        //   index: _currentIndex,
+        //   children: _views,
+        // ),
+
+
+
+
+        IndexedStack(
           index: _currentIndex,
+          children: _views,
         ),
 
 
 
 
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+
+
+
+        bottomNavigationBar:
+
+
+
+
+
+
+
+
+
+
+        BottomNavigationBar(
+
+
+          backgroundColor: Colors.black.withOpacity(0.5),
+
+
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
@@ -52,21 +109,31 @@ class _HomeViewState extends State<HomeView> {
             });
           },
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Theme.of(context).iconTheme.color,
+          elevation: 0,
+          iconSize:30,
+
+
+          selectedItemColor: Colors.teal,
           unselectedItemColor: Colors.white,
+
+
           showSelectedLabels: false,
           enableFeedback: false,
           showUnselectedLabels: false,
+        //  selectedLabelStyle: TextStyle(color: Colors.teal),
+
+
 
           items: const [
             BottomNavigationBarItem(
 
-              icon: Icon(UniconsLine.home_alt ,size: 30), label: 'Timeline' ,),
+
+              icon: Icon(UniconsLine.home_alt ,), label: 'Timeline' ,),
             BottomNavigationBarItem(
-                icon: Icon(UniconsLine.search, size: 30), label: 'Chat'),
+                icon: Icon(UniconsLine.atom, ), label: 'Chat'),
 
             BottomNavigationBarItem(//comment_dots
-                icon: Icon(UniconsLine.user ,size: 30 ), label: 'Favourite'),
+                icon: Icon(UniconsLine.user , ), label: 'Favourite'),
 
           ],
         ),

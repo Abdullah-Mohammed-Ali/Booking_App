@@ -20,15 +20,16 @@ class ProfileImage extends StatelessWidget {
         children: [
           ClipOval(
             child: cubit.profileImage == null
-                ? Image.asset('assets/images/background.jpg',
-                    height: 130.h, width: 130.h, fit: BoxFit.fill)
+                ? Image.asset('assets/images/person.png',
+                    height: 128.h, width: 128.h, fit: BoxFit.cover)
                 : Image.file(cubit.profileImage!,
-                    height: 130.h, width: 130.h, fit: BoxFit.fill),
+                    height: 128.h, width: 128.h,  fit: BoxFit.cover,),
           ),
           Positioned.fill(
             child: Align(
               alignment: Alignment.bottomRight,
               child: Container(
+
                 height: 45.h,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -36,10 +37,12 @@ class ProfileImage extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.cover,
                   child: CircleAvatar(
+                    backgroundColor: Colors.teal,
                     child: IconButton(
                       onPressed: onPressed,
                       icon: Icon(
                         Icons.upload,
+                        color: Colors.white,
                       ),
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:booking_app/features/explore/persentation/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -19,14 +20,31 @@ class HotelsMapsScreen extends StatefulWidget {
   State<HotelsMapsScreen> createState() => _HotelsMapsScreenState();
 }
 
+
+
+
+
 class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
-  Completer<GoogleMapController> controllerForMap =
-      Completer<GoogleMapController>();
+  late Completer<GoogleMapController> controllerForMap ;
 
   var mapsListController = ScrollController();
-  CameraPosition camera = CameraPosition(target: LatLng(11, 11), zoom: 15);
+  CameraPosition camera = CameraPosition(
+
+      target: LatLng(11, 11),
+
+
+      zoom: 17 , tilt: 0 ,bearing: 0);
 
   Set<Marker>? markers = {};
+
+  @override
+  void initState() {
+    // TODO: implement initStsate
+    super.initState();
+
+    controllerForMap =
+        Completer<GoogleMapController>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +75,10 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
                       return Positioned(
                         bottom: 35.h,
                         child: Container(
+
+
+
+
                           height: 200,
                           width: MediaQuery.of(context).size.width,
                           child: ListView.separated(
@@ -77,7 +99,10 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
                               return SizedBox(
                                 width: MediaQuery.of(context).size.width + 5,
                                 child: HotelItem(context,
-                                    state.hotels.data!.data2![index], index),
+                                    state.hotels.data!.data2![index], index
+                                ,Colors.black.withOpacity(0.8),
+
+                                ),
                               );
                             },
                           ),
@@ -107,9 +132,71 @@ class _HotelsMapsScreenState extends State<HotelsMapsScreen> {
 
     SchedulerBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        setState(() {
-          snapshot.data!.animateCamera(CameraUpdate.newLatLng(currentHotelPos));
-        });
+
+        if(snapshot.data! ==null){
+
+          showDialog(
+            context: context,
+            builder: (context) => ScaffoldMessenger(
+              child: Builder(
+                builder: (context) => Container(
+                  height: 30,
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      // onTap: () => Navigator.of(context).pop(),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child:    AlertDialog(
+                            elevation: 0,
+                            backgroundColor: Colors.transparent,
+
+
+                            content:  Padding(
+                              padding: const EdgeInsets.only(top: 350.0),
+                              child: Loading(),
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+
+
+          setState(() {
+
+          });
+
+
+          print("nooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+
+
+
+        }
+        else{
+
+          setState(() {
+
+          });
+
+
+          setState(() {
+            //print(d)
+
+            print("animateddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
+            print( snapshot.data);
+            print(controllerForMap.future);
+            snapshot.data!.animateCamera(CameraUpdate.newLatLng(currentHotelPos));
+          });
+
+
+        }
+
+
       },
     );
     markers!.clear();

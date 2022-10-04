@@ -2,12 +2,14 @@ import 'package:booking_app/core/utils/app_colors.dart';
 import 'package:booking_app/features/explore/persentation/bloc/hotels_bloc.dart';
 import 'package:booking_app/features/explore/persentation/pages/book_now.dart';
 import 'package:booking_app/features/explore/persentation/widgets/buttonWiget.dart';
+import 'package:booking_app/features/filter/search/presentation/pages/search_page.dart';
 import 'package:booking_app/routing/app_routing_names.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../filter/core2/util/blocs/app/cubit.dart';
 import '../../domain/entities/hotels.dart';
 import '../widgets/messgae.dart';
 
@@ -42,14 +44,16 @@ class _HotelsPageState extends State<HotelsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        
+
         resizeToAvoidBottomInset: false,
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: ListOrMapButton(
           onPressed: () {
             Navigator.pushNamed(context, AppRoutingNames.mapsScreen);
           },
         ),
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.black.withOpacity(0.5),
 
         //
         // appBar: AppBar(
@@ -113,6 +117,7 @@ class _HotelsPageState extends State<HotelsPage> {
               primary: false,
               toolbarHeight: 200,
               elevation: 0,
+              automaticallyImplyLeading: false,
 
               backgroundColor: Colors.transparent,
               expandedHeight: 450,
@@ -136,7 +141,7 @@ class _HotelsPageState extends State<HotelsPage> {
                           bottomRight: Radius.circular(0),
                           bottomLeft: Radius.circular(30)),
                       child: Image.asset(
-                        'assets/img/6.jpg',
+                        'assets/img/1.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -180,7 +185,19 @@ class _HotelsPageState extends State<HotelsPage> {
                         padding: const EdgeInsets.all(20.0),
                         child: ButtonWidget3(
                           text: "View Hotel",
-                          onClicked: () {},
+                          onClicked: () async {
+
+
+                             AppBloc.get(context).getFacilities();
+
+
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => SearchPage(),),
+                            );
+
+
+                          },
                         )),
                   ),
                 ],
@@ -206,7 +223,9 @@ class _HotelsPageState extends State<HotelsPage> {
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
                       return HotelItem(
-                          context, state.hotels.data!.data2![index], index);
+                          context, state.hotels.data!.data2![index], index
+                      ,Colors.grey.withOpacity(0.1),
+                      );
                     },
                   ),
                 ),
@@ -254,22 +273,26 @@ class ListOrMapButton extends StatelessWidget {
             width: 120,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Icon(Icons.location_city), Text('Maps view ')],
+              children: [Icon(Icons.location_city), Text('Maps view')],
             ),
           )),
     );
   }
 }
 
-InkWell HotelItem(BuildContext context, Data2 hotelData, int index) {
+InkWell HotelItem(BuildContext context, Data2 hotelData, int index , Color color) {
   return InkWell(
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     hoverColor: Colors.transparent,
     onTap: () {
+
+
+
       Navigator.of(context).push(
         MaterialPageRoute(
             builder: (context) => BookNow(
+              description: hotelData.description ,
                   image:
                       "http://api.mahmoudtaha.com/images/${hotelData.hotelImages?[0].image}",
                   adress: hotelData.address ?? "Roma fgfgm gfn",
@@ -289,7 +312,7 @@ InkWell HotelItem(BuildContext context, Data2 hotelData, int index) {
           height: 200.0,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: AppColors.darkGrey,
+            color:  color,
             borderRadius: BorderRadius.circular(30.0),
           ),
           child: Padding(
@@ -389,8 +412,8 @@ InkWell HotelItem(BuildContext context, Data2 hotelData, int index) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     hotelData.rate == "10.50"
-                        ? _buildRatingStars(5)
-                        : _buildRatingStars(4),
+                        ? _buildRatingStars(10)
+                        : _buildRatingStars(8),
                     Text(
                       '/per night',
                       style: TextStyle(
@@ -404,7 +427,7 @@ InkWell HotelItem(BuildContext context, Data2 hotelData, int index) {
                   height: 5,
                 ),
                 Text(
-                  "${hotelData.rate ?? "Grand Hotel"} out from 5 stars",
+                  "${hotelData.rate ?? "Grand Hotel"} out from 10 stars",
                   style: TextStyle(fontSize: 7),
                 )
               ],
@@ -435,6 +458,17 @@ InkWell HotelItem(BuildContext context, Data2 hotelData, int index) {
   );
 }
 
+
+
+
+
+
+
+
+
+
+
+
 Text _buildRatingStars(double rating) {
   String stars = '';
   for (int i = 0; i < rating; i++) {
@@ -443,6 +477,6 @@ Text _buildRatingStars(double rating) {
   stars.trim();
   return Text(
     stars,
-    style: TextStyle(fontSize: 8),
+    style: TextStyle(fontSize: 6),
   );
 }

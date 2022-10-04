@@ -88,9 +88,9 @@ class MyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint Circle_1 = Paint()..color = Color(0xff4285f4);
+    Paint Circle_1 = Paint()..color = Colors.white;
 
-    Paint Circle_2 = Paint()..color = Color(0xfffbbc05);
+    Paint Circle_2 = Paint()..color = Colors.teal;
 
     canvas.drawCircle(Offset(size.width *.5, size.height * .5),
         size.width * Radius_1, Circle_1);

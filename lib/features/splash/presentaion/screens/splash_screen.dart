@@ -44,7 +44,7 @@ class SplashScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: DefaultElevatedButton(
                   title: 'Start',
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.teal,
                   onPressed: () {
                     Navigator.pushReplacementNamed(
                         context, AppRoutingNames.onBoarding);

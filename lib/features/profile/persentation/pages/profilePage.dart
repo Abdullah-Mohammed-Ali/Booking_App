@@ -17,6 +17,11 @@ import 'package:unicons/unicons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../../../splash/presentaion/screens/splash_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -37,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Builder(
       builder: (context) => Scaffold(
-          backgroundColor: Colors.grey.shade900,
+          backgroundColor: Colors.black.withOpacity(0.5),
           appBar: buildAppBar(context),
           body: _buildBody()),
     );
@@ -93,6 +98,15 @@ class _ProfilePageState extends State<ProfilePage> {
             return ListView(
               physics: BouncingScrollPhysics(),
               children: [
+
+
+
+
+
+
+
+
+
                 ProfileWidget(
                   imagePath: state.profile_Info.data.image,
 
@@ -107,6 +121,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
 
+
+
                     Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => EditProfilePage()
@@ -117,6 +133,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     ;
                   },
                 ),
+
+
+
+
+
+
+
+
+
+
+
+
                 const SizedBox(height: 24),
                 buildName(state.profile_Info.data.name,
                     state.profile_Info.data.email),
@@ -153,7 +181,19 @@ class _ProfilePageState extends State<ProfilePage> {
                 buildChangePasswordButton(
                     text: "Payment", icon: UniconsLine.paypal , onClicked: () {},),
                 buildChangePasswordButton(
-                    text: "setting", icon: UniconsLine.setting , onClicked: () {},) ,
+                  text: "setting", icon: UniconsLine.setting , onClicked: () {},) ,
+                buildChangePasswordButton(
+                    text: "Log out", icon: UniconsLine.sign_out_alt , onClicked: () {
+
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => SplashScreen()
+
+
+                    ),
+                  )
+                  ;
+                },) ,
               ],
             );
           } else if (state is PassChangeState) {

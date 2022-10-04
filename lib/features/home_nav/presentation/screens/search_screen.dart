@@ -108,7 +108,9 @@ class _SearchScreenState extends State<SearchScreen> {
                               itemCount: state.hotels.data?.data2?.length ?? 3,
                               itemBuilder: (BuildContext context, int index) {
                                 return HotelItem(context,
-                                    state.hotels.data!.data2![index], index);
+                                    state.hotels.data!.data2![index], index
+                                ,Colors.grey.withOpacity(0.1),
+                                );
                               },
                             ),
                           ),

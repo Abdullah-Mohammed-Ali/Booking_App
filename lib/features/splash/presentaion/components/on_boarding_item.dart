@@ -20,7 +20,7 @@ class OnBoardingItem extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-              height: 250.h,
+              height: 220.h,
               width: double.maxFinite,
               child: Lottie.asset(
                 lottiePath,

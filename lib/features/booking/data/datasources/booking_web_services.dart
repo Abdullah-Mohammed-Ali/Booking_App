@@ -22,7 +22,10 @@ class BookingWebService {
 
 
       headers: {
-        'token':  "JSsf0q50iWSVkxwnLeDqPCwBqayyVjByv0gwVMTcvnZfiJuuAkyc2YKFU9ex",
+        'token':  GlobalApiToken
+
+
+        //"JSsf0q50iWSVkxwnLeDqPCwBqayyVjByv0gwVMTcvnZfiJuuAkyc2YKFU9ex",
 
       },
       receiveDataWhenStatusError: true,
