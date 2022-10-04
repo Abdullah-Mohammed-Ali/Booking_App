@@ -6,7 +6,6 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
-![sdsdsdsdsdsdsdsdsdsd](https://user-images.githubusercontent.com/88941146/193448139-b08cd908-1a14-4118-976f-b04c806e838d.PNG)
 
 
 
