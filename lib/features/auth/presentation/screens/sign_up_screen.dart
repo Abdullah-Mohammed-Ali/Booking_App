@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:booking_app/dependency_container.dart' as di;
+import 'package:unicons/unicons.dart';
+import '../../../explore/persentation/widgets/loading.dart';
 import '../../../splash/presentaion/components/default_item.dart';
 import '../components/default_text_form_field.dart';
 import '../components/profile_image.dart';
@@ -30,8 +32,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
           var cubit = AuthCubit.get(context);
 
           return Scaffold(
+           // resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.grey.withOpacity(0.1),
             appBar: AppBar(
-              backgroundColor: Color(0x302F30),
+              title:             Text('Sign up',
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(
+                    color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20.sp)),
+              backgroundColor: Colors.transparent,
               elevation: 0,
             ),
             body: SafeArea(
@@ -48,13 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        Text('Sign up',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall!
-                                .copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 25.sp)),
+
                         SizedBox(
                           height: 8.h,
                         ),
@@ -68,6 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: spacing.h,
                         ),
                         DefaultTextFormField(
+                          icon: UniconsLine.user,
                           hintText: 'enter your username',
                           lable: 'Your username',
                           height: 50.h,
@@ -82,6 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: spacing.h,
                         ),
                         DefaultTextFormField(
+                          icon: Icons.email,
                           hintText: 'enter your email',
                           lable: 'Your email',
                           height: 50.h,
@@ -96,6 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: spacing.h,
                         ),
                         DefaultTextFormField(
+                          icon: Icons.password,
                           key: UniqueKey(),
                           hintText: 'enter your password',
                           lable: 'Your password',
@@ -126,6 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: spacing.h,
                         ),
                         DefaultTextFormField(
+                          icon: Icons.password,
                           hintText: 'confirm your password',
                           lable: 'Your password',
                           keyboardType: TextInputType.visiblePassword,
@@ -157,15 +167,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 34.h,
                         ),
                         (state is AuthSignupLoading)
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
+
+                            ?   SizedBox(
+                            width: 400.0,
+                            height: 70.0,
+
+                            child: Loading())
                             : DefaultElevatedButton(
-                                height: 50.h,
-                                backgroundColor: Colors.blue,
+                                height: 40.h,
+                                backgroundColor: Colors.teal,
                                 onPressed: () async {
                                   if (formKey.currentState!.validate()) {
                                     if (cubit.profileImage == null) {
+                                      FocusManager.instance.primaryFocus?.unfocus();
+
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
                                         content: Text(
@@ -173,6 +188,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       ));
                                     }
+                                    FocusManager.instance.primaryFocus?.unfocus();
+
                                     await cubit.register(context);
                                   }
                                 },
@@ -186,7 +203,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .caption!
-                                .copyWith()),
+                                .copyWith(
+                              fontSize: 8
+
+                            )),
                         LoginInstead(
                           onPressed: () {
                             Navigator.pushReplacementNamed(
@@ -219,7 +239,11 @@ class LoginInstead extends StatelessWidget {
       children: [
         Text(alreadyHasAccount,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.caption!.copyWith()),
+            style: Theme.of(context).textTheme.caption!.copyWith(
+              fontSize: 9
+
+
+            )),
         TextButton(
           onPressed: onPressed,
           style: TextButton.styleFrom(
@@ -227,7 +251,11 @@ class LoginInstead extends StatelessWidget {
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             alignment: Alignment.centerLeft,
           ),
-          child: Text('Login'),
+          child: Text('Login' ,style: Theme.of(context).textTheme.caption!.copyWith(
+    fontSize: 9 ,color: Colors.blue
+
+
+    )),
         )
       ],
     );

@@ -19,74 +19,82 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: [
-        SizedBox(
-          height: 30.h,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: CarouselSlider(
-              items: onBoardingItems
-                  .map(
-                    (e) => OnBoardingItem(
-                        lottiePath: e.lottiePath,
-                        title: e.title,
-                        subTitle: e.subtitle),
-                  )
-                  .toList(),
-              options: CarouselOptions(
-                enableInfiniteScroll: false,
-                disableCenter: true,
-                height: 480.h,
-                autoPlay: true,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    pageIndex = index;
-                  });
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+          resizeToAvoidBottomInset : false,
+          backgroundColor: Colors.grey.withOpacity(0.1),
+
+          body: Column(
+        children: [
+          SizedBox(
+            height: 30.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: CarouselSlider(
+                items: onBoardingItems
+                    .map(
+                      (e) => OnBoardingItem(
+                          lottiePath: e.lottiePath,
+                          title: e.title,
+                          subTitle: e.subtitle),
+                    )
+                    .toList(),
+                options: CarouselOptions(
+                  enableInfiniteScroll: false,
+                  disableCenter: true,
+                  height: 480.h,
+                  autoPlay: true,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      pageIndex = index;
+                    });
+                  },
+                  viewportFraction: 1,
+                )),
+          ),
+          AnimatedSmoothIndicator(
+              effect: WormEffect(
+                  radius: 8.h,
+                  dotHeight: 8.h,
+                  dotColor: Colors.grey.shade300,
+                  dotWidth: 8.w),
+              activeIndex: pageIndex,
+              count: onBoardingItems.length),
+          SizedBox(
+            height: 40.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50.0.h),
+            child: DefaultElevatedButton(
+                height: 42.h,
+                elevation: 0,
+                title: 'Login',
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutingNames.signIn);
                 },
-                viewportFraction: 1,
-              )),
-        ),
-        AnimatedSmoothIndicator(
-            effect: WormEffect(
-                radius: 8.h,
-                dotHeight: 8.h,
-                dotColor: Colors.grey.shade300,
-                dotWidth: 8.w),
-            activeIndex: pageIndex,
-            count: onBoardingItems.length),
-        SizedBox(
-          height: 40.h,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50.0.h),
-          child: DefaultElevatedButton(
-              height: 42.h,
-              elevation: 0,
-              title: 'Login',
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutingNames.signIn);
-              },
-              backgroundColor: Colors.blue),
-        ),
-        SizedBox(
-          height: 18.h,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50.0.h),
-          child: DefaultElevatedButton(
-              height: 42.h,
-              elevation: 1,
-              title: 'Create account',
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutingNames.signUp);
-              },
-              textColor: Colors.black,
-              backgroundColor: Colors.white),
-        ),
-      ],
-    ));
+                backgroundColor: Colors.teal),
+          ),
+          SizedBox(
+            height: 18.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 50.0.h),
+            child: DefaultElevatedButton(
+                height: 42.h,
+                elevation: 0,
+                title: 'Create account',
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutingNames.signUp);
+                },
+                textColor: Colors.black,
+                backgroundColor: Colors.white),
+          ),
+        ],
+      )),
+    );
   }
 }

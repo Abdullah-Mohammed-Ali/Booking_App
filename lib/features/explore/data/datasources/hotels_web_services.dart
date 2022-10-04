@@ -19,7 +19,10 @@ class HotelsWebService {
 
 
       headers: {
-        'token':  "z4miu7xCRSrsw7r7za2ioTdnQCzEN24WpanWiMTpqNKN7iiOVke0iHTfho64",
+        'token':  GlobalApiToken
+
+
+        //"z4miu7xCRSrsw7r7za2ioTdnQCzEN24WpanWiMTpqNKN7iiOVke0iHTfho64",
 
       },
       receiveDataWhenStatusError: true,

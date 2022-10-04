@@ -22,12 +22,15 @@ class BookNow extends StatefulWidget {
   String? facilities;
 
   String? image;
+  String? description;
+
   String? price;
   int? hoteId;
   int? userId;
 
   BookNow({
     Key? key,
+    required this.description,
     required this.image,
     required this.price,
     required this.name,
@@ -42,7 +45,93 @@ class BookNow extends StatefulWidget {
 }
 
 class _BookNowState extends State<BookNow> {
+  List<String> img = [
+    'assets/img/1.jpg',
+    'assets/img/2.jpg',
+    'assets/img/3.jpg',
+    'assets/img/4.jpg',
+    'assets/img/5.jpg',
+    'assets/img/6.jpg',
+    'assets/img/7.jpg',
+    'assets/img/8.jpg',
+    'assets/img/person1.jpg',
+    'assets/img/person2.jpg'
+  ];
+
+
+
   static bool flag = true;
+  showPopUp(context){
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) =>
+
+
+          Container(
+
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(32.0))),
+              contentPadding: EdgeInsets.only(top: 10.0),
+        backgroundColor: Colors.black.withOpacity(0.8 ),
+        title: const Text('Successfully Booked !' ,
+              style: TextStyle(
+              fontSize: 17,
+                color: Colors.teal
+
+
+        ),
+
+
+        ),
+        content: Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: const Text('if you wanna cancel , you can cancel it from upComing tap',
+          style: TextStyle(
+              fontSize: 9
+
+
+          ),
+          ),
+        ),
+        actions: <Widget>[
+
+            InkWell(
+            child: Container(
+                //padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(32.0),
+                  bottomRight: Radius.circular(32.0)),
+            ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text('OK',
+                        style: TextStyle(
+                       // fontSize: 17,
+                        color: Colors.teal
+
+
+                    ),
+
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            )
+        ]
+
+    ),
+      ),
+    );
+
+
+  }
 
   var top = 0.0;
 
@@ -87,9 +176,9 @@ class _BookNowState extends State<BookNow> {
             //   )
             // ],
             flexibleSpace:
-                Stack(alignment: AlignmentDirectional.bottomCenter, children: [
+            Stack(alignment: AlignmentDirectional.bottomCenter, children: [
               Hero(
-                tag: "sadas",
+                tag:"kkkkkkkkkkkkkkkkk",
                 child: Image.network(
                   widget.image!,
                   width: double.maxFinite,
@@ -114,81 +203,56 @@ class _BookNowState extends State<BookNow> {
                           decoration: BoxDecoration(
                               color: AppColors.black.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(20)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HotelHightlightsWidget(
-                                hotelName: widget.name!,
-                                price: widget.price!,
-                                address: widget.adress!,
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              AnimatedSwitcher(
-                                  duration: const Duration(seconds: 0),
-                                  transitionBuilder: (Widget child,
-                                          Animation<double> animation) =>
-                                      ScaleTransition(
-                                          scale: animation, child: child),
-                                  child: flag
-                                      ? DefaultButton(
-                                          key: Key('1'),
-                                          backgroundColor: Colors.teal,
-                                          text: 'Book Now',
-                                          fontSize: 12,
-                                          textColor: AppColors.white,
-                                          onclick: () {
-                                            setState(() {
-                                              flag = false;
-                                            });
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HotelHightlightsWidget(
+                                  hotelName: widget.name!,
+                                  price: widget.price!,
+                                  address: widget.adress!,
+                                ),
+                                const SizedBox(
+                                  height: 60,
+                                ),
+                                DefaultButton(
+                                    key: Key('1'),
+                                    backgroundColor: Colors.teal,
+                                    text: 'Book Now',
+                                    fontSize: 12,
+                                    textColor: AppColors.white,
+                                    onclick: () {
 
-                                            setState(() {});
 
-                                            CreateBooking createBooking =
-                                                CreateBooking(
-                                              hoteId: widget.hoteId!,
-                                              userId: widget.userId!,
-                                            );
 
-                                            BlocProvider.of<BookingBloc>(
-                                                    context)
-                                                .add((CreateBookingEvent(
-                                                    createBooking:
-                                                        createBooking)));
 
-                                            print("pressssed1");
-                                            print(flag);
-                                          },
-                                          borderRadius: 25,
-                                          fontWeight: FontWeight.normal,
-                                          height: 40)
-                                      : DefaultButton(
-                                          key: Key('2'),
-                                          backgroundColor: Colors.red,
-                                          text: 'Up Coming',
-                                          fontSize: 12,
-                                          textColor: AppColors.white,
-                                          onclick: () {
-                                            // UpdateBooking updateBooking =UpdateBooking(
-                                            //   bookinId: hoteId! ,
-                                            //   type: "" ,
-                                            //
-                                            //
-                                            // );
-                                            //
-                                            // BlocProvider.of<BookingBloc>(context).add((UpdateBookingEvent(updateBooking: updateBooking)));
-                                            //
 
-                                            setState(() {
-                                              flag = !flag;
-                                            });
-                                          },
-                                          borderRadius: 25,
-                                          fontWeight: FontWeight.normal,
-                                          height: 40)),
-                            ],
+
+                                      showPopUp(context);
+                                      setState(() {
+                                        flag = false;
+                                      });
+
+                                      setState(() {});
+
+                                      CreateBooking createBooking = CreateBooking(
+                                        hoteId: widget.hoteId!,
+                                        userId: widget.userId!,
+                                      );
+
+                                      BlocProvider.of<BookingBloc>(context).add(
+                                          (CreateBookingEvent(
+                                              createBooking: createBooking)));
+
+                                      print("pressssed1");
+                                      print(flag);
+                                    },
+                                    borderRadius: 25,
+                                    fontWeight: FontWeight.normal,
+                                    height: 40)
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -235,7 +299,7 @@ class _BookNowState extends State<BookNow> {
                     height: 5,
                   ),
                   ReadMoreText(
-                    'featuring a fitness center, Grand Royal Park is located in sweden 4.7 km from national musuem a fitness center. featuring a fitness center, Grand Royal Park is located in sweden 4.7 km from national musuem a fitness center. featuring a fitness center, Grand Royal Park is located in sweden 4.7 km from national musuem a fitness center. featuring a fitness center, Grand Royal Park is located in sweden 4.7 km from national musuem a fitness center.',
+                    widget.description!,
                     trimLines: 7,
                     trimMode: TrimMode.Line,
                     textAlign: TextAlign.justify,
@@ -270,20 +334,19 @@ class _BookNowState extends State<BookNow> {
                   Container(
                     height: 100,
                     child: ListView.separated(
-                      shrinkWrap: true,
+
+                      //shrinkWrap: true,
                       primary: false,
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: Image(
-                          height: 150,
-                          width: 150,
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                            'https://marketplace.canva.com/ixlvc/MAEGxWixlvc/1/s2/canva-teacher-asking-a-question-to-the-class-MAEGxWixlvc.jpg',
-                          ),
-                        ),
+                        child: Image.asset(
+                            height: 150,
+                            width: 130,
+                            fit: BoxFit.cover,
+
+                            img[index]                            ),
                       ),
                       separatorBuilder: (context, index) => const SizedBox(
                         width: 10,
@@ -301,19 +364,20 @@ class _BookNowState extends State<BookNow> {
                   const ReviewWidget(
                     reviewerName: 'Alexia Jane',
                     imageUrl:
-                        'https://marketplace.canva.com/ixlvc/MAEGxWixlvc/1/s2/canva-teacher-asking-a-question-to-the-class-MAEGxWixlvc.jpg',
-                    rate: 8.0,
+                    "https://caricom.org/wp-content/uploads/Floyd-Morris-Remake-1024x879-1.jpg",                      rate: 8.0,
                     review:
-                        'This is located in a great spot close to shops and bars, very quiet location.',
+                    'This is located in a great spot close to shops and bars, very quiet location.',
                   ),
                   const MySpacer(),
                   const ReviewWidget(
                     reviewerName: 'Jacky Depp',
                     imageUrl:
-                        'https://marketplace.canva.com/ixlvc/MAEGxWixlvc/1/s2/canva-teacher-asking-a-question-to-the-class-MAEGxWixlvc.jpg',
-                    rate: 8.0,
+                    "https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg"
+                    ,
+
+                    rate: 9.0,
                     review:
-                        'Good staff, very comfortable bed. Very quiet location, place could be with an update',
+                    'Good staff, very comfortable bed. Very quiet location, place could be with an update',
                   ),
                   const MySpacer(),
                   Image.network(
@@ -323,64 +387,41 @@ class _BookNowState extends State<BookNow> {
                     fit: BoxFit.cover,
                   ),
                   const SizedBox(height: 15),
-                  AnimatedSwitcher(
-                      duration: const Duration(seconds: 0),
-                      transitionBuilder:
-                          (Widget child, Animation<double> animation) =>
-                              ScaleTransition(scale: animation, child: child),
-                      child: flag
-                          ? DefaultButton(
-                              key: Key('1'),
-                              backgroundColor: Colors.teal,
-                              text: 'Book Now',
-                              fontSize: 12,
-                              textColor: AppColors.white,
-                              onclick: () {
-                                setState(() {
-                                  flag = false;
-                                });
+                  DefaultButton(
+                      key: Key('1'),
+                      backgroundColor: Colors.teal,
+                      text: 'Book Now',
+                      fontSize: 12,
+                      textColor: AppColors.white,
+                      onclick: () {
+                        setState(() {
+                          flag = false;
 
-                                setState(() {});
 
-                                CreateBooking createBooking = CreateBooking(
-                                  hoteId: widget.hoteId!,
-                                  userId: widget.userId!,
-                                );
 
-                                BlocProvider.of<BookingBloc>(context).add(
-                                    (CreateBookingEvent(
-                                        createBooking: createBooking)));
 
-                                print("pressssed1");
-                                print(flag);
-                              },
-                              borderRadius: 25,
-                              fontWeight: FontWeight.normal,
-                              height: 40)
-                          : DefaultButton(
-                              key: Key('2'),
-                              backgroundColor: Colors.red,
-                              text: 'Up Coming',
-                              fontSize: 12,
-                              textColor: AppColors.white,
-                              onclick: () {
-                                // UpdateBooking updateBooking =UpdateBooking(
-                                //   bookinId: hoteId! ,
-                                //   type: "" ,
-                                //
-                                //
-                                // );
-                                //
-                                // BlocProvider.of<BookingBloc>(context).add((UpdateBookingEvent(updateBooking: updateBooking)));
-                                //
 
-                                setState(() {
-                                  flag = !flag;
-                                });
-                              },
-                              borderRadius: 25,
-                              fontWeight: FontWeight.normal,
-                              height: 40)),
+
+
+                        });
+
+                        setState(() {});
+
+                        CreateBooking createBooking = CreateBooking(
+                          hoteId: widget.hoteId!,
+                          userId: widget.userId!,
+                        );
+
+                        BlocProvider.of<BookingBloc>(context).add(
+                            (CreateBookingEvent(
+                                createBooking: createBooking)));
+
+                        print("pressssed1");
+                        print(flag);
+                      },
+                      borderRadius: 25,
+                      fontWeight: FontWeight.normal,
+                      height: 40)
                 ],
               ),
             ),

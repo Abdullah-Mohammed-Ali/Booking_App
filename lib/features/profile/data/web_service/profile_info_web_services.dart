@@ -17,6 +17,7 @@ import 'package:image_picker/image_picker.dart';
 class ProfileWebService {
   late Dio dio;
 
+
   ProfileWebService() {
     BaseOptions options = BaseOptions(
 
@@ -24,7 +25,9 @@ class ProfileWebService {
 
 
       headers: {
-        'token':  "TsxO7n2br7SvbTiWbvmdche0kLzUV0xpjh7vfMES9zJkWBlnCWWcEZ5f3e0R",
+        'token':  GlobalApiToken
+
+        //"TsxO7n2br7SvbTiWbvmdche0kLzUV0xpjh7vfMES9zJkWBlnCWWcEZ5f3e0R",
 
       },
       receiveDataWhenStatusError: true,
@@ -37,6 +40,11 @@ class ProfileWebService {
   }
 
   Future<Map<String,Map>> getProfileInfo() async {
+    print("tokkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkken");
+    print(GlobalApiToken);
+
+
+
     try {
       Response response = await dio.get('auth/profile-info');
 

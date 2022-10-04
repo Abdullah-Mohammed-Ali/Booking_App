@@ -56,6 +56,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           const SizedBox(height: 8),
           TextFormField(
 
+
+
+
             keyboardType: widget.keyboardType,
            // Only numbers can be entered
             obscureText: widget.obsecure,
@@ -67,7 +70,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
 
 
+
             decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.black.withOpacity(0.3),
 
               border: OutlineInputBorder(
 

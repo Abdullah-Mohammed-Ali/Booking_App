@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import 'package:booking_app/core/utils/snekarMessage.dart';
+import 'package:booking_app/features/explore/persentation/widgets/loading.dart';
 import 'package:booking_app/features/profile/data/models/pass_change_model.dart';
 import 'package:booking_app/features/profile/domain/entities/profile_info_saved.dart';
 import 'package:booking_app/features/profile/persentation/pages/profilePage.dart';
@@ -75,7 +76,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
         builder: (context) =>
             Scaffold(
               backgroundColor: Colors.grey.shade900,
-              appBar: buildAppBar(context),
+              appBar:  AppBar(
+
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+
+              ],
+            ),
               body: BlocConsumer<ProfileBloc, ProfileState>(
                 listener: (context, state) {
 
@@ -295,19 +303,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
         context: context,
         builder: (context) => ScaffoldMessenger(
           child: Builder(
-            builder: (context) => Scaffold(
-              backgroundColor: Colors.transparent,
-              body: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                // onTap: () => Navigator.of(context).pop(),
-                child: GestureDetector(
-                  onTap: () {},
-                  child:    AlertDialog(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
+            builder: (context) => Container(
+              height: 30,
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                body: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  // onTap: () => Navigator.of(context).pop(),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child:    AlertDialog(
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
 
 
-                      content:  Center(child: CircularProgressIndicator())),
+                        content:  Padding(
+                          padding: const EdgeInsets.only(top: 350.0),
+                          child: Loading(),
+                        )),
+                  ),
                 ),
               ),
             ),

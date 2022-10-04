@@ -1,8 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:booking_app/features/booking/domain/entities/booking.dart';
 import 'package:booking_app/features/booking/domain/entities/getBooking.dart';
 import 'package:booking_app/features/booking/domain/entities/updateBooking.dart';
 import 'package:booking_app/features/booking/persentation/bloc/booking_bloc.dart';
-import 'package:booking_app/features/booking/persentation/widgets/loading.dart';
 import 'package:booking_app/features/booking/persentation/widgets/loading2.dart';
 import 'package:booking_app/features/profile/persentation/widgets/messgae.dart';
 import 'package:booking_app/features/profile/persentation/widgets/widget2/button2.dart';
@@ -15,6 +15,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:unicons/unicons.dart';
 
+import '../../../explore/persentation/pages/hotelspage.dart';
+import '../../../explore/persentation/widgets/loading.dart';
+
 class BookingPage extends StatefulWidget {
   const BookingPage({Key? key}) : super(key: key);
 
@@ -25,6 +28,7 @@ class BookingPage extends StatefulWidget {
 class _BookingPageState extends State<BookingPage>
     with SingleTickerProviderStateMixin {
   bool flag = true;
+  String? selectedImage;
   String? imageChanged;
   List<String> hotelImagesList = [];
 
@@ -69,9 +73,13 @@ class _BookingPageState extends State<BookingPage>
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: Colors.grey.shade900,
-            body: Padding(
-              padding: EdgeInsets.all(12.0.h),
+
+
+
+            backgroundColor: Colors.black.withOpacity(0.5),
+            body:
+            Container(
+              //padding: EdgeInsets.all(5.0.h),
               child: Column(
                 children: [
                   // give the tab bar a height [can change hheight to preferred height]
@@ -88,7 +96,7 @@ class _BookingPageState extends State<BookingPage>
                   ),
 
                   Container(
-                    height: 45.h,
+                    height: 48.h,
                     decoration: BoxDecoration(
                       color: Colors.white10,
                       borderRadius: BorderRadius.circular(
@@ -110,21 +118,21 @@ class _BookingPageState extends State<BookingPage>
 
                         if (pageNumber == 0) {
                           GetBooking getBooking =
-                              GetBooking(count: 9, upcoming: "upcomming");
+                          GetBooking(count: 9, upcoming: "upcomming");
                           BlocProvider.of<BookingBloc>(context)
                               .add((GetBookingEvent(getBooking: getBooking)));
                         }
 
                         if (pageNumber == 1) {
                           GetBooking getBooking =
-                              GetBooking(count: 9, upcoming: "cancelled");
+                          GetBooking(count: 9, upcoming: "cancelled");
                           BlocProvider.of<BookingBloc>(context)
                               .add((GetBookingEvent(getBooking: getBooking)));
                         }
 
                         if (pageNumber == 2) {
                           GetBooking getBooking =
-                              GetBooking(count: 9, upcoming: "completed");
+                          GetBooking(count: 9, upcoming: "completed");
                           BlocProvider.of<BookingBloc>(context)
                               .add((GetBookingEvent(getBooking: getBooking)));
                         }
@@ -135,9 +143,9 @@ class _BookingPageState extends State<BookingPage>
 
                       unselectedLabelColor: Colors.grey,
                       unselectedLabelStyle:
-                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                       labelStyle:
-                          TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                       tabs: [
                         // first tab [you can add an icon using the icon property]
                         Tab(
@@ -165,15 +173,24 @@ class _BookingPageState extends State<BookingPage>
                         Center(child: _buildBody()),
 
                         // second tab bar view widget
-                        Center(child: _buildBody()),
+                        Center(child: _buildBody2()),
 
-                        Center(child: _buildBody()),
+                        Center(child: _buildBody2()),
                       ],
                     ),
                   ),
                 ],
               ),
-            )));
+            ))
+
+
+
+
+            );
+
+
+
+
   }
 
   Widget _buildBody() {
@@ -186,9 +203,11 @@ class _BookingPageState extends State<BookingPage>
               onPressed: () {
                 //BlocProvider.of<BookingBloc>(context).add(GetBookingEvent());
               },
-              child: CircularProgressIndicator(
-                color: Colors.teal,
-              ),
+              child:Loading()
+
+              // CircularProgressIndicator(
+              //   color: Colors.teal,
+              // ),
             );
           } else if (state is GetBookingState) {
             return SingleChildScrollView(
@@ -214,22 +233,27 @@ class _BookingPageState extends State<BookingPage>
 
                     //  print(imageChanged);
 
-                    for (int i = 0; i < hotelImages2.length; i++) {
-                      // print(i);
-
-                      var value = hotelImages2[i].image;
-
-                      hotelImagesList.add(value!);
-
-                      // print(value);
-
-                    }
 
                     if (imageChanged != null) {
+
+                      for (int i = 0; i < hotelImages2.length; i++) {
+                        // print(i);
+
+                        var value = hotelImages2[i].image;
+
+                        hotelImagesList.add(value!);
+
+                        // print(value);
+
+                      }
+
+
+
+
                       if (hotelImagesList.contains(imageChanged)) {
                         print("sameeeeeeeeeeeeeeeeee");
 
-                        imageChanged = hotelImages2[index].image;
+                        selectedImage = imageChanged;
 
                         hotelImagesList.clear();
 
@@ -237,7 +261,7 @@ class _BookingPageState extends State<BookingPage>
 
                       } else {
                         print("elseeeeeeeeeeeeeeee");
-                        imageChanged = state.booking.data?.data?[index].hotel
+                        selectedImage = state.booking.data?.data?[index].hotel
                             ?.hotelImages?[1].image;
 
                         print("what ");
@@ -282,349 +306,347 @@ class _BookingPageState extends State<BookingPage>
                       images = [];
                     }
 
-                    return Card(
-                      // style:Theme.of(context).textTheme.bodyText1!.copyWith(
-                      //color: Theme.of(context).buttonTheme.colorScheme!.background),
-                      elevation: 0,
-                      //color: Theme.of(context).scaffoldBackgroundColor,
-                      color: Colors.grey.shade900,
+                    return Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 12),
 
-                      //color: Colors.black,
-                      //margin: const EdgeInsets.all(0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 12),
+                          //      Row(
+                          //   children: [
+                          //     const Text('  '),
+                          //     Flexible(
+                          //       child: Text(
+                          //        "description" ,
+                          //         textAlign: TextAlign.left,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
 
-                            //      Row(
-                            //   children: [
-                            //     const Text('  '),
-                            //     Flexible(
-                            //       child: Text(
-                            //        "description" ,
-                            //         textAlign: TextAlign.left,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
+                          const SizedBox(height: 12),
 
-                            const SizedBox(height: 12),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              //img[index] ,
 
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                //img[index] ,
+                              //hotelImages2[index].image==imageChanged?
 
-                                //hotelImages2[index].image==imageChanged?
+                              selectedImage != null
+                                  ? "http://api.mahmoudtaha.com/images/${selectedImage ?? "Grand Hotel"}"
+                                  : "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[1].image ?? "Grand Hotel"}",
 
-                                imageChanged != null
-                                    ? "http://api.mahmoudtaha.com/images/${imageChanged ?? "Grand Hotel"}"
-                                    : "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[1].image ?? "Grand Hotel"}",
-
-                                //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
-                                height: 300,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.fill,
-                              ),
+                              //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
+                              height: 300,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.fill,
                             ),
-                            const SizedBox(height: 12),
+                          ),
+                          const SizedBox(height: 12),
 
-                            Container(
-                              width: 350,
-                              height: 80,
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: state.booking.data?.data?[index]
-                                        .hotel?.hotelImages?.length ??
-                                    0,
-                                itemBuilder: (BuildContext context, int i) {
-                                  return Container(
-                                    height: 50,
-                                    child: InkWell(
-                                      onTap: () {
-                                        imageChanged = state
-                                            .booking
-                                            .data
-                                            ?.data?[index]
-                                            .hotel
-                                            ?.hotelImages?[i]
-                                            .image;
-                                        setState(() {});
-                                        print("pressed");
+                          Container(
+                            width: 350,
+                            height: 73,
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: state.booking.data?.data?[index]
+                                      .hotel?.hotelImages?.length ??
+                                  0,
+                              itemBuilder: (BuildContext context, int i) {
+                                return Container(
+                                  height: 50,
+                                  child: InkWell(
+                                    onTap: () {
+                                      imageChanged = state
+                                          .booking
+                                          .data
+                                          ?.data?[index]
+                                          .hotel
+                                          ?.hotelImages?[i]
+                                          .image;
+                                      setState(() {});
+                                      print("pressed");
 
-                                        //  print(hotelImages2[index].image);
-                                        print(imageChanged);
-                                      },
-                                      child: Card(
+                                      //  print(hotelImages2[index].image);
+                                      print(selectedImage);
+                                    },
+                                    child:  Padding(
+                                      padding: const EdgeInsets.only(left: 3.0 ,right: 3),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
                                         child: Image.network(
                                           "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[i].image ?? "Grand Hotel"}",
                                         ),
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
-                            ),
-
-                            const SizedBox(height: 12),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text(
-                                        state.booking.data?.data?[index].hotel
-                                                ?.name
-                                                .toString() ??
-                                            "Grand Royal Hotel",
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                // AnimatedSwitcher(
-                                //   duration: const Duration(seconds:  0),
-                                //
-                                //
-                                //   transitionBuilder:(Widget child,
-                                //       Animation<double>animation)=>
-                                //       ScaleTransition(scale: animation, child: child),
-                                //
-                                //   child:
-                                //
-                                //   flag ?
-                                //   FloatingActionButton.extended(
-                                //     key: Key('1'),
-                                //     label: const Text('Upcomming' , style: TextStyle(color: Colors.redAccent , fontWeight: FontWeight.bold , fontSize: 12),), // <-- Text
-                                //     backgroundColor: Colors.white12,
-                                //     icon: const Icon( // <-- Icon
-                                //       Icons.done,
-                                //       size: 20.0,
-                                //       color: Colors.red,
-                                //
-                                //     ),
-                                //
-                                //     onPressed: () {
-                                //       setState(() {
-                                //         flag=!flag;
-                                //
-                                //         //UpdateBooking
-                                //
-                                //
-                                //
-                                //         UpdateBooking updateBooking =UpdateBooking(
-                                //             bookinId:    state.booking.data?.data?[index].id ??5 ,
-                                //             type:  "cancelled"
-                                //
-                                //         );
-                                //         BlocProvider.of<BookingBloc>(context).add((UpdateBookingEvent(updateBooking: updateBooking)));
-                                //
-                                //
-                                //
-                                //       });
-                                //
-                                //     },
-                                //   )
-                                //
-                                //     :
-                                //     FloatingActionButton.extended(
-                                //     key: Key('2'),
-                                //     label: const Text('Book now' , style: TextStyle(color: Colors.blueAccent , fontWeight: FontWeight.bold , fontSize: 15),), // <-- Text
-                                //     backgroundColor: Colors.white12,
-                                //     icon: const Icon( // <-- Icon
-                                //       Icons.notification_add,
-                                //       size: 20.0,
-                                //       color: Colors.blueAccent,
-                                //
-                                //     ),
-                                //
-                                //
-                                //     onPressed: () {
-                                //       setState(() {
-                                //
-                                //         print("pressssed");
-                                //         flag=!flag;
-                                //         print(flag);
-                                //
-                                //       });
-                                //
-                                //       setState(() {
-                                //
-                                //       });
-                                //
-                                //     },
-                                //   )
-                                //
-                                //
-                                //
-                                //
-                                //
-                                // ),
-                                FloatingActionButton.extended(
-                                  key: Key('1'),
-                                  label: const Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                        color: Colors.redAccent,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 13),
-                                  ), // <-- Text
-                                  backgroundColor: Colors.white12,
-                                  icon: const Icon(
-                                    // <-- Icon
-                                    Icons.cancel,
-                                    size: 17.0,
-                                    color: Colors.red,
                                   ),
-
-                                  onPressed: () {
-                                    setState(() {
-                                      flag = !flag;
-
-                                      //UpdateBooking
-
-                                      UpdateBooking updateBooking =
-                                          UpdateBooking(
-                                              bookinId: state.booking.data
-                                                      ?.data?[index].id ??
-                                                  5,
-                                              type: "cancelled");
-                                      BlocProvider.of<BookingBloc>(context).add(
-                                          (UpdateBookingEvent(
-                                              updateBooking: updateBooking)));
-                                    });
-                                  },
-                                )
-                              ],
+                                );
+                              },
                             ),
-                            const SizedBox(height: 10),
+                          ),
 
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "\$",
-                                      style: TextStyle(
-                                          color: Colors.teal,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ), // <-- Text
+                          const SizedBox(height: 12),
 
-                                    Text(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 150,
+                                    child: Text(
                                       state.booking.data?.data?[index].hotel
-                                              ?.price
+                                              ?.name
                                               .toString() ??
                                           "Grand Royal Hotel",
                                       style: TextStyle(
-                                          color: Colors.teal,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15),
-                                    ), // <-- Text
-                                    Text(
-                                      '/per night',
-                                      style: TextStyle(
-                                          color: Colors.teal,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12),
-                                    ), // <-- Text
-                                  ],
-                                ),
-                              ],
-                            ),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "sleeps 2 people + 2 children",
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(0.5),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ), // <-- Text
-
-                                const SizedBox(width: 10),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-
-                            Container(
-                              width: double.infinity,
-                              height: 30,
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount:
-                                    images?.length != null ? images?.length : 0,
-                                itemBuilder: (context, i) {
-                                  List<Color> colors = [
-                                    Colors.blue,
-                                    Colors.red,
-                                    Colors.green,
-                                    Colors.yellowAccent,
-                                  ];
-
-                                  return Row(
-                                    children: [
-                                      images != []
-                                          ? Container(
-                                              child: CircleAvatar(
-                                                radius: 10,
-
-                                                backgroundColor: colors[i],
-
-                                                child: Image.network(
-                                                  "http://api.mahmoudtaha.com/images/${images?[i].image ?? ""}",
-
-                                                  //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
-                                                  height: 350,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  fit: BoxFit.fill,
-                                                ),
-
-                                                // backgroundImage: NetworkImage(
-                                                //   "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[0].image}" ,
-                                                //
-                                                //   //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
-                                                //
-                                                //
-                                                //
-                                                //
-                                                // ),
-                                              ),
-                                            )
-                                          : Text(""),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        images?[i].name ?? "",
-                                        style: TextStyle(fontSize: 10),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  );
-                                },
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
                               ),
+
+                              // AnimatedSwitcher(
+                              //   duration: const Duration(seconds:  0),
+                              //
+                              //
+                              //   transitionBuilder:(Widget child,
+                              //       Animation<double>animation)=>
+                              //       ScaleTransition(scale: animation, child: child),
+                              //
+                              //   child:
+                              //
+                              //   flag ?
+                              //   FloatingActionButton.extended(
+                              //     key: Key('1'),
+                              //     label: const Text('Upcomming' , style: TextStyle(color: Colors.redAccent , fontWeight: FontWeight.bold , fontSize: 12),), // <-- Text
+                              //     backgroundColor: Colors.white12,
+                              //     icon: const Icon( // <-- Icon
+                              //       Icons.done,
+                              //       size: 20.0,
+                              //       color: Colors.red,
+                              //
+                              //     ),
+                              //
+                              //     onPressed: () {
+                              //       setState(() {
+                              //         flag=!flag;
+                              //
+                              //         //UpdateBooking
+                              //
+                              //
+                              //
+                              //         UpdateBooking updateBooking =UpdateBooking(
+                              //             bookinId:    state.booking.data?.data?[index].id ??5 ,
+                              //             type:  "cancelled"
+                              //
+                              //         );
+                              //         BlocProvider.of<BookingBloc>(context).add((UpdateBookingEvent(updateBooking: updateBooking)));
+                              //
+                              //
+                              //
+                              //       });
+                              //
+                              //     },
+                              //   )
+                              //
+                              //     :
+                              //     FloatingActionButton.extended(
+                              //     key: Key('2'),
+                              //     label: const Text('Book now' , style: TextStyle(color: Colors.blueAccent , fontWeight: FontWeight.bold , fontSize: 15),), // <-- Text
+                              //     backgroundColor: Colors.white12,
+                              //     icon: const Icon( // <-- Icon
+                              //       Icons.notification_add,
+                              //       size: 20.0,
+                              //       color: Colors.blueAccent,
+                              //
+                              //     ),
+                              //
+                              //
+                              //     onPressed: () {
+                              //       setState(() {
+                              //
+                              //         print("pressssed");
+                              //         flag=!flag;
+                              //         print(flag);
+                              //
+                              //       });
+                              //
+                              //       setState(() {
+                              //
+                              //       });
+                              //
+                              //     },
+                              //   )
+                              //
+                              //
+                              //
+                              //
+                              //
+                              // ),
+                              FloatingActionButton.extended(
+                                heroTag: null,
+                                key: Key('1'),
+                                label: const Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      color: Colors.redAccent,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 13),
+                                ), // <-- Text
+                                backgroundColor: Colors.white12,
+                                icon: const Icon(
+                                  // <-- Icon
+                                  Icons.cancel,
+                                  size: 17.0,
+                                  color: Colors.red,
+                                ),
+
+                                onPressed: () {
+                                  setState(() {
+                                    flag = !flag;
+
+                                    //UpdateBooking
+
+                                    UpdateBooking updateBooking =
+                                        UpdateBooking(
+                                            bookinId: state.booking.data
+                                                    ?.data?[index].id ??
+                                                5,
+                                            type: "cancelled");
+                                    BlocProvider.of<BookingBloc>(context).add(
+                                        (UpdateBookingEvent(
+                                            updateBooking: updateBooking)));
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "\$",
+                                    style: TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ), // <-- Text
+
+                                  Text(
+                                    state.booking.data?.data?[index].hotel
+                                            ?.price
+                                            .toString() ??
+                                        "Grand Royal Hotel",
+                                    style: TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ), // <-- Text
+                                  Text(
+                                    '/per night',
+                                    style: TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12),
+                                  ), // <-- Text
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "sleeps ${index+4} people + ${index+1} children",
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.5),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10),
+                              ), // <-- Text
+
+                              const SizedBox(width: 10),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+
+                          Container(
+                            width: double.infinity,
+                            height: 30,
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount:
+                                  images?.length != null ? images?.length : 0,
+                              itemBuilder: (context, i) {
+                                List<Color> colors = [
+                                  Colors.blue,
+                                  Colors.red,
+                                  Colors.green,
+                                  Colors.yellowAccent,
+                                ];
+
+                                return Row(
+                                  children: [
+                                    images != []
+                                        ? Container(
+                                            child: CircleAvatar(
+                                              radius: 10,
+
+                                              backgroundColor: colors[i],
+
+                                              child: Image.network(
+                                                "http://api.mahmoudtaha.com/images/${images?[i].image ?? ""}",
+
+                                                //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
+                                                height: 350,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                fit: BoxFit.fill,
+                                              ),
+
+                                              // backgroundImage: NetworkImage(
+                                              //   "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[0].image}" ,
+                                              //
+                                              //   //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
+                                              //
+                                              //
+                                              //
+                                              //
+                                              // ),
+                                            ),
+                                          )
+                                        : Text(""),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      images?[i].name ?? "",
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
                       ),
                     );
                   },
@@ -683,4 +705,486 @@ class _BookingPageState extends State<BookingPage>
       ),
     );
   }
+
+
+  Widget _buildBody2() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: BlocBuilder<BookingBloc, BookingState>(
+        builder: (context, state) {
+          if (state is LoadingBookingState) {
+            return MaterialButton(
+                onPressed: () {
+                  //BlocProvider.of<BookingBloc>(context).add(GetBookingEvent());
+                },
+                child:Loading()
+
+              // CircularProgressIndicator(
+              //   color: Colors.teal,
+              // ),
+            );
+          } else if (state is GetBookingState) {
+            return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 10),
+                scrollDirection: Axis.vertical,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(bottom: 10),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    //imageChanged=state.booking.data?.data?[index].hotel?.hotelImages?[1].image;
+
+                    List? facilities =
+                        state.booking.data?.data?[index].hotel?.facilities;
+
+                    //List ?Fac= state.booking.data?.data?[index].hotel?.facilities?[0].image;
+
+                    List<HotelImages>? hotelImages2 =
+                        state.booking.data?.data?[index].hotel?.hotelImages ??
+                            [];
+
+                    //  print(imageChanged);
+
+
+                    if (imageChanged != null) {
+
+                      for (int i = 0; i < hotelImages2.length; i++) {
+                        // print(i);
+
+                        var value = hotelImages2[i].image;
+
+                        hotelImagesList.add(value!);
+
+                        // print(value);
+
+                      }
+
+
+
+
+                      if (hotelImagesList.contains(imageChanged)) {
+                        print("sameeeeeeeeeeeeeeeeee");
+
+                        selectedImage = imageChanged;
+
+                        hotelImagesList.clear();
+
+                        //break;
+
+                      } else {
+                        print("elseeeeeeeeeeeeeeee");
+                        selectedImage = state.booking.data?.data?[index].hotel
+                            ?.hotelImages?[1].image;
+
+                        print("what ");
+                        //imageChanged=null;
+
+                        hotelImagesList.clear();
+                      }
+                    } else {}
+
+//kkkkkkkkkk
+
+                    //print(imageChanged);
+                    print(state.booking.data?.data?[index].hotel
+                        ?.hotelImages?[1].image);
+
+                    List<Facilities>? images = [];
+                    List<String> names = [];
+
+                    //kimo
+
+                    // String ?image1;
+                    // String ?image2;
+                    // String ?name1;
+                    // String ?name2;
+                    if (facilities?.length != 0) {
+                      images =
+                          state.booking.data?.data?[index].hotel?.facilities;
+
+                      // image1= state.booking.data?.data?[index].hotel?.facilities?[0].image;
+                      //
+                      // image2= state.booking.data?.data?[index].hotel?.facilities?[1].image;
+                      //
+                      // name1=state.booking.data?.data?[index].hotel?.facilities?[0].name;
+                      // name2=state.booking.data?.data?[index].hotel?.facilities?[1].name;
+
+                    } else {
+                      // image1 ="";
+                      // image2="";
+                      // name1 ="";
+                      // name2="";
+
+                      images = [];
+                    }
+
+                    return Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 12),
+
+                          //      Row(
+                          //   children: [
+                          //     const Text('  '),
+                          //     Flexible(
+                          //       child: Text(
+                          //        "description" ,
+                          //         textAlign: TextAlign.left,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+
+                          const SizedBox(height: 12),
+
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              //img[index] ,
+
+                              //hotelImages2[index].image==imageChanged?
+
+                              selectedImage != null
+                                  ? "http://api.mahmoudtaha.com/images/${selectedImage ?? "Grand Hotel"}"
+                                  : "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[1].image ?? "Grand Hotel"}",
+
+                              //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
+                              height: 300,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+
+                          Container(
+                            width: 350,
+                            height: 73,
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: state.booking.data?.data?[index]
+                                  .hotel?.hotelImages?.length ??
+                                  0,
+                              itemBuilder: (BuildContext context, int i) {
+                                return Container(
+                                  height: 50,
+                                  child: InkWell(
+                                    onTap: () {
+                                      imageChanged = state
+                                          .booking
+                                          .data
+                                          ?.data?[index]
+                                          .hotel
+                                          ?.hotelImages?[i]
+                                          .image;
+                                      setState(() {});
+                                      print("pressed");
+
+                                      //  print(hotelImages2[index].image);
+                                      print(selectedImage);
+                                    },
+                                    child:  Padding(
+                                      padding: const EdgeInsets.only(left: 3.0 ,right: 3),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[i].image ?? "Grand Hotel"}",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 150,
+                                    child: Text(
+                                      state.booking.data?.data?[index].hotel
+                                          ?.name
+                                          .toString() ??
+                                          "Grand Royal Hotel",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              // AnimatedSwitcher(
+                              //   duration: const Duration(seconds:  0),
+                              //
+                              //
+                              //   transitionBuilder:(Widget child,
+                              //       Animation<double>animation)=>
+                              //       ScaleTransition(scale: animation, child: child),
+                              //
+                              //   child:
+                              //
+                              //   flag ?
+                              //   FloatingActionButton.extended(
+                              //     key: Key('1'),
+                              //     label: const Text('Upcomming' , style: TextStyle(color: Colors.redAccent , fontWeight: FontWeight.bold , fontSize: 12),), // <-- Text
+                              //     backgroundColor: Colors.white12,
+                              //     icon: const Icon( // <-- Icon
+                              //       Icons.done,
+                              //       size: 20.0,
+                              //       color: Colors.red,
+                              //
+                              //     ),
+                              //
+                              //     onPressed: () {
+                              //       setState(() {
+                              //         flag=!flag;
+                              //
+                              //         //UpdateBooking
+                              //
+                              //
+                              //
+                              //         UpdateBooking updateBooking =UpdateBooking(
+                              //             bookinId:    state.booking.data?.data?[index].id ??5 ,
+                              //             type:  "cancelled"
+                              //
+                              //         );
+                              //         BlocProvider.of<BookingBloc>(context).add((UpdateBookingEvent(updateBooking: updateBooking)));
+                              //
+                              //
+                              //
+                              //       });
+                              //
+                              //     },
+                              //   )
+                              //
+                              //     :
+                              //     FloatingActionButton.extended(
+                              //     key: Key('2'),
+                              //     label: const Text('Book now' , style: TextStyle(color: Colors.blueAccent , fontWeight: FontWeight.bold , fontSize: 15),), // <-- Text
+                              //     backgroundColor: Colors.white12,
+                              //     icon: const Icon( // <-- Icon
+                              //       Icons.notification_add,
+                              //       size: 20.0,
+                              //       color: Colors.blueAccent,
+                              //
+                              //     ),
+                              //
+                              //
+                              //     onPressed: () {
+                              //       setState(() {
+                              //
+                              //         print("pressssed");
+                              //         flag=!flag;
+                              //         print(flag);
+                              //
+                              //       });
+                              //
+                              //       setState(() {
+                              //
+                              //       });
+                              //
+                              //     },
+                              //   )
+                              //
+                              //
+                              //
+                              //
+                              //
+                              // ),
+
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "\$",
+                                    style: TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ), // <-- Text
+
+                                  Text(
+                                    state.booking.data?.data?[index].hotel
+                                        ?.price
+                                        .toString() ??
+                                        "Grand Royal Hotel",
+                                    style: TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ), // <-- Text
+                                  Text(
+                                    '/per night',
+                                    style: TextStyle(
+                                        color: Colors.teal,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12),
+                                  ), // <-- Text
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "sleeps ${index+4} people + ${index+1} children",
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.5),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10),
+                              ), // <-- Text
+
+                              const SizedBox(width: 10),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+
+                          Container(
+                            width: double.infinity,
+                            height: 30,
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount:
+                              images?.length != null ? images?.length : 0,
+                              itemBuilder: (context, i) {
+                                List<Color> colors = [
+                                  Colors.blue,
+                                  Colors.red,
+                                  Colors.green,
+                                  Colors.yellowAccent,
+                                ];
+
+                                return Row(
+                                  children: [
+                                    images != []
+                                        ? Container(
+                                      child: CircleAvatar(
+                                        radius: 10,
+
+                                        backgroundColor: colors[i],
+
+                                        child: Image.network(
+                                          "http://api.mahmoudtaha.com/images/${images?[i].image ?? ""}",
+
+                                          //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
+                                          height: 350,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                          fit: BoxFit.fill,
+                                        ),
+
+                                        // backgroundImage: NetworkImage(
+                                        //   "http://api.mahmoudtaha.com/images/${state.booking.data?.data?[index].hotel?.hotelImages?[0].image}" ,
+                                        //
+                                        //   //"https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2022/04/12/1329/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.jpg/MUMGH-P0765-Inner-Courtyard-Hotel-Exterior-Evening.16x9.jpg?imwidth=1920",
+                                        //
+                                        //
+                                        //
+                                        //
+                                        // ),
+                                      ),
+                                    )
+                                        : Text(""),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      images?[i].name ?? "",
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: state.booking.data?.data?.length ?? 1,
+                ));
+          } else if (state is UpdateBookingState) {
+            GetBooking getBooking = GetBooking(count: 9, upcoming: "upcomming");
+            BlocProvider.of<BookingBloc>(context)
+                .add((GetBookingEvent(getBooking: getBooking)));
+
+            return MaterialButton(
+              key: Key("1"),
+
+              onPressed: () {
+                print(state.bookingStatus);
+                //BlocProvider.of<BookingBloc>(context).add(CreateBookingEvent());
+              },
+              //   child:  CircularProgressIndicator(
+              //
+              //   color: Colors.teal,
+              // ),
+            );
+          } else if (state is CreateBookingState) {
+            GetBooking getBooking = GetBooking(count: 9, upcoming: "upcomming");
+            BlocProvider.of<BookingBloc>(context)
+                .add((GetBookingEvent(getBooking: getBooking)));
+
+            return MaterialButton(
+              onPressed: () {
+                print(state.bookingStatus);
+                //BlocProvider.of<BookingBloc>(context).add(GetBookingEvent());
+              },
+              child: Text(
+                "updateEvent",
+                style: TextStyle(fontSize: 45),
+              ),
+            );
+          } else if (state is ErrorBookingState) {
+            return MessageDisplayWidget(message: state.message);
+          }
+          return MaterialButton(
+              onPressed: () {
+                //BlocProvider.of<BookingBloc>(context).add(GetBookingEvent());
+
+                //BlocProvider.of<BookingBloc>(context).getProfileInfo;
+                print("i presed");
+              },
+              child: Container(
+                child: Text(
+                  "nothing ",
+                  style: TextStyle(fontSize: 45),
+                ),
+              ));
+        },
+      ),
+    );
+  }
+
+
+
 }

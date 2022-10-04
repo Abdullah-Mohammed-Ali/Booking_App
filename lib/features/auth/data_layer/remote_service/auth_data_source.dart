@@ -17,6 +17,11 @@ class AuthDataSource extends AuthContractDataSource {
   AuthDataSource(this._dio);
   @override
   Future<AuthUserModel> login(AuthUser authUser) async {
+
+
+
+
+
     final Response response =
         await _dio.post(ApiConstants.loginAuthPath(), queryParameters: {
       QueryParametersHeaders.authName: authUser.name,
@@ -41,16 +46,49 @@ class AuthDataSource extends AuthContractDataSource {
 
   @override
   Future<AuthUserModel> register(AuthUser authUser) async {
-    final Response response =
-        await _dio.post(ApiConstants.registerAuthPath(), queryParameters: {
+
+
+
+    print("pathhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjj");
+
+    print( authUser.imagePath!.path);
+    print( authUser.imagePath!.path.split('/').last);
+
+
+
+    FormData formData = FormData.fromMap({
       QueryParametersHeaders.authName: authUser.name,
       QueryParametersHeaders.authEmail: authUser.email,
       QueryParametersHeaders.authPass: authUser.password,
       QueryParametersHeaders.authPassConfirmation: authUser.password,
-      QueryParametersHeaders.image: MultipartFile.fromFile(
+      QueryParametersHeaders.image:await  MultipartFile.fromFile(
           authUser.imagePath!.path,
           filename: authUser.imagePath!.path.split('/').last),
+
+
     });
+
+
+    final Response response =
+        await _dio.post(ApiConstants.registerAuthPath(),
+    data: formData
+
+
+    //         queryParameters: {
+    //   QueryParametersHeaders.authName: authUser.name,
+    //   QueryParametersHeaders.authEmail: authUser.email,
+    //   QueryParametersHeaders.authPass: authUser.password,
+    //   QueryParametersHeaders.authPassConfirmation: authUser.password,
+    //   QueryParametersHeaders.image: MultipartFile.fromFile(
+    //       authUser.imagePath!.path,
+    //       filename: authUser.imagePath!.path.split('/').last),
+    //
+    //
+    //
+    // }
+
+
+    );
 
     if (response.statusCode == 200) {
       if (response.data['status']['type'] == '0') {

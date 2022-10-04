@@ -15,6 +15,7 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../explore/persentation/widgets/loading.dart';
 import '../../domain/entities/update.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -71,7 +72,14 @@ class _ChnagePasswordState extends State<ChnagePassword> {
   Widget build(BuildContext context) => Builder(
         builder: (context) => Scaffold(
             backgroundColor: Colors.grey.shade900,
-            appBar: buildAppBar(context),
+            appBar:  AppBar(
+
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+
+          ],
+        ),
             body: BlocConsumer<ProfileBloc, ProfileState>(
               listener: (context, state) {
                 if (state is PassChangeState) {
@@ -88,6 +96,10 @@ class _ChnagePasswordState extends State<ChnagePassword> {
                       colorBody2Focus = Colors.red;
                       colorBody2Border = Colors.red;
                     }
+
+
+                    FocusManager.instance.primaryFocus?.unfocus();  //keyboard closing
+                    Navigator.pop(context);
 
                     SnackBarMessage().showErrorSnackBar(
                         message: state.pass_Change.status.title.en,
@@ -110,6 +122,7 @@ class _ChnagePasswordState extends State<ChnagePassword> {
                     Timer(Duration(seconds: 1), () {
                       print("Yeah, this line is printed after 3 seconds");
                       FocusManager.instance.primaryFocus?.unfocus();  //keyboard closing
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     });
                   }
@@ -197,6 +210,38 @@ class _ChnagePasswordState extends State<ChnagePassword> {
         print(_titleController);
         print(_bodyController);
 
+        showDialog(
+          context: context,
+          builder: (context) => ScaffoldMessenger(
+            child: Builder(
+              builder: (context) => Container(
+                height: 30,
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    // onTap: () => Navigator.of(context).pop(),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child:    AlertDialog(
+                          elevation: 0,
+                          backgroundColor: Colors.transparent,
+
+
+                          content:  Padding(
+                            padding: const EdgeInsets.only(top: 360.0),
+                            child: Loading(),
+                          )),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+
+
+
         BlocProvider.of<ProfileBloc>(context)
             .add((PassChangeEvent(pass: pass)));
 
@@ -212,6 +257,12 @@ class _ChnagePasswordState extends State<ChnagePassword> {
         }
       }
     } else {
+
+
+      FocusManager.instance.primaryFocus?.unfocus();  //keyboard closing
+      Navigator.pop(context);
+
+
       colorBody2Focus = Colors.red;
       colorBody2Border = Colors.red;
       setState(() {});

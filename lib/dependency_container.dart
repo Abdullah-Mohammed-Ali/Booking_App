@@ -34,6 +34,9 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/network/network_info.dart';
+import 'features/filter/core2/util/blocs/app/cubit.dart';
+import 'features/filter/core2/util/network/remote/dio_helper.dart';
+import 'features/filter/core2/util/network/repository.dart';
 import 'features/profile/data/repository/profile_info_repository.dart';
 import 'features/profile/data/web_service/profile_info_web_services.dart';
 import 'features/profile/domain/reposatories/profiles_info_repository.dart';
@@ -45,6 +48,42 @@ import 'features/profile/persentation/bloc/profile_bloc.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+
+
+
+
+
+    sl.registerFactory(() => AppBloc(
+      repository: sl(),
+    ));
+
+    sl.registerLazySingleton<DioHelper>(
+          () => DioImpl(),
+    );
+
+    sl.registerLazySingleton<Repository>(
+          () => RepositoryImplementation(
+        dioHelper: sl(),
+      ),
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // blocs
   sl.registerFactory(() => AuthCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => FathiBloc(sl(), sl()));

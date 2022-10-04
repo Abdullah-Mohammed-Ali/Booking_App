@@ -14,6 +14,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'dependency_container.dart';
+import 'features/filter/core2/util/blocs/app/cubit.dart';
+import 'features/filter/explore2/presentation/pages/explore_page.dart';
+import 'features/filter/home/presentation/pages/home_page.dart';
+import 'features/filter/search/presentation/pages/search_page.dart';
 import 'features/profile/persentation/bloc/profile_bloc.dart';
 import 'features/profile/persentation/pages/profilePage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +28,8 @@ import 'routing/routing_generator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+
+
   runApp(MyApp());
   if (di.sl<SharedPrefGetUseCase>().call(sharedApiTokenKey) != null) {
     GlobalApiToken =
@@ -46,6 +53,18 @@ class MyApp extends StatelessWidget {
             create: (_) => di.sl<BookingBloc>()
               ..add(GetBookingEvent(getBooking: getBooking))),
         BlocProvider(create: (_) => di.sl<HotelsBloc>()..add(GetHotelsEvent())),
+
+
+
+    BlocProvider(
+    create: (_) => di.sl<ProfileBloc>()..add(GetProfileInfoEvent())),
+
+    BlocProvider<AppBloc>(create: (context) => di.sl()),
+
+
+
+
+
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 750),
@@ -54,15 +73,22 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             darkTheme: ThemeData(
               brightness: Brightness.dark,
+              backgroundColor:   Colors.black.withOpacity(0.1),
               /* dark theme settings */
             ),
             themeMode: ThemeMode.dark,
             debugShowCheckedModeBanner: false,
             title: 'Booking App',
+            // home: SearchPage(),
             onGenerateRoute: AppRoute.onGenerateRoute,
-            initialRoute: GlobalApiToken == ''
+            initialRoute:
+            GlobalApiToken == ''
                 ? AppRoutingNames.splash
-                : AppRoutingNames.homeNavScreen,
+                : AppRoutingNames.splash
+
+
+
+
           );
         },
       ),
